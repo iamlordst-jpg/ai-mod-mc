@@ -13,7 +13,6 @@ public final class RealityBendingClient {
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
-            GeoItemRenderer.registerItemRenderer(ModItems.TELEKINETIC_GLOVE.get(), new GeoItemRenderer<>(new RealityOrbModel()));
             GeoItemRenderer.registerItemRenderer(ModItems.FORUM_PHANTOM_MASK.get(), new GeoItemRenderer<>(new RealityOrbModel()));
             GeoItemRenderer.registerItemRenderer(ModItems.REALITY_CHECK.get(), new GeoItemRenderer<>(new RealityOrbModel()));
             GeoItemRenderer.registerItemRenderer(ModItems.PLOT_ARMOR.get(), new GeoItemRenderer<>(new RealityOrbModel()));
