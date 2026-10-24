@@ -1,0 +1,157 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.reality_orb.forum_phantom_mask.idle": {
+      "loop": true, "animation_length": 2.0,
+      "bones": {
+        "root": {"rotation": {"0.0": [0, 0, -12], "1.0": [0, 117, 12], "2.0": [0, 234, -12]}, "scale": {"0.0": [1.0, 1.0, 1.0], "1.0": [1.04, 1.04, 1.04], "2.0": [1.0, 1.0, 1.0]}},
+        "inner_core": {"rotation": {"0.0": [0, 0, 0], "2.0": [0, -234, 0]}},
+        "orbit_ring": {"rotation": {"0.0": [0, 0, -25], "1.0": [0, 0, 25], "2.0": [0, 0, -25]}}
+      }
+    },
+    "animation.reality_orb.reality_check.idle": {
+      "loop": true, "animation_length": 2.0,
+      "bones": {
+        "root": {"rotation": {"0.0": [0, 0, -8], "1.0": [0, 198, 8], "2.0": [0, 396, -8]}, "scale": {"0.0": [1.0, 1.0, 1.0], "1.0": [1.07, 1.07, 1.07], "2.0": [1.0, 1.0, 1.0]}},
+        "inner_core": {"rotation": {"0.0": [0, 0, 0], "2.0": [0, -396, 0]}},
+        "orbit_ring": {"rotation": {"0.0": [0, 0, -25], "1.0": [0, 0, 25], "2.0": [0, 0, -25]}}
+      }
+    },
+    "animation.reality_orb.plot_armor.idle": {
+      "loop": true, "animation_length": 2.0,
+      "bones": {
+        "root": {"rotation": {"0.0": [0, 0, 0], "1.0": [0, 81, 0], "2.0": [0, 162, 0]}, "scale": {"0.0": [1.0, 1.0, 1.0], "1.0": [1.03, 1.03, 1.03], "2.0": [1.0, 1.0, 1.0]}},
+        "inner_core": {"rotation": {"0.0": [0, 0, 0], "2.0": [0, -162, 0]}},
+        "orbit_ring": {"rotation": {"0.0": [0, 0, -25], "1.0": [0, 0, 25], "2.0": [0, 0, -25]}}
+      }
+    },
+    "animation.reality_orb.lag_spike.idle": {
+      "loop": true, "animation_length": 2.0,
+      "bones": {
+        "root": {"rotation": {"0.0": [0, 0, -24], "1.0": [0, 324, 24], "2.0": [0, 648, -24]}, "scale": {"0.0": [1.0, 1.0, 1.0], "1.0": [1.11, 1.11, 1.11], "2.0": [1.0, 1.0, 1.0]}},
+        "inner_core": {"rotation": {"0.0": [0, 0, 0], "2.0": [0, -648, 0]}},
+        "orbit_ring": {"rotation": {"0.0": [0, 0, -25], "1.0": [0, 0, 25], "2.0": [0, 0, -25]}}
+      }
+    },
+    "animation.reality_orb.pocket_dimension.idle": {
+      "loop": true, "animation_length": 2.0,
+      "bones": {
+        "root": {"rotation": {"0.0": [0, 0, -18], "1.0": [0, 135, 18], "2.0": [0, 270, -18]}, "scale": {"0.0": [1.0, 1.0, 1.0], "1.0": [1.04, 1.04, 1.04], "2.0": [1.0, 1.0, 1.0]}},
+        "inner_core": {"rotation": {"0.0": [0, 0, 0], "2.0": [0, -270, 0]}},
+        "orbit_ring": {"rotation": {"0.0": [0, 0, -25], "1.0": [0, 0, 25], "2.0": [0, 0, -25]}}
+      }
+    },
+    "animation.reality_orb.admin_wand.idle": {
+      "loop": true, "animation_length": 2.0,
+      "bones": {
+        "root": {"rotation": {"0.0": [0, 0, 0], "1.0": [0, 99, 0], "2.0": [0, 198, 0]}, "scale": {"0.0": [1.0, 1.0, 1.0], "1.0": [1.03, 1.03, 1.03], "2.0": [1.0, 1.0, 1.0]}},
+        "inner_core": {"rotation": {"0.0": [0, 0, 0], "2.0": [0, -198, 0]}},
+        "orbit_ring": {"rotation": {"0.0": [0, 0, -25], "1.0": [0, 0, 25], "2.0": [0, 0, -25]}}
+      }
+    },
+    "animation.reality_orb.chaos_dice.idle": {
+      "loop": true, "animation_length": 2.0,
+      "bones": {
+        "root": {"rotation": {"0.0": [0, 0, -15], "1.0": [0, 270, 15], "2.0": [0, 540, -15]}, "scale": {"0.0": [1.0, 1.0, 1.0], "1.0": [1.09, 1.09, 1.09], "2.0": [1.0, 1.0, 1.0]}},
+        "inner_core": {"rotation": {"0.0": [0, 0, 0], "2.0": [0, -540, 0]}},
+        "orbit_ring": {"rotation": {"0.0": [0, 0, -25], "1.0": [0, 0, 25], "2.0": [0, 0, -25]}}
+      }
+    },
+    "animation.reality_orb.meme_beacon.idle": {
+      "loop": true, "animation_length": 2.0,
+      "bones": {
+        "root": {"rotation": {"0.0": [0, 0, 0], "1.0": [0, 72, 0], "2.0": [0, 144, 0]}, "scale": {"0.0": [1.0, 1.0, 1.0], "1.0": [1.02, 1.02, 1.02], "2.0": [1.0, 1.0, 1.0]}},
+        "inner_core": {"rotation": {"0.0": [0, 0, 0], "2.0": [0, -144, 0]}},
+        "orbit_ring": {"rotation": {"0.0": [0, 0, -25], "1.0": [0, 0, 25], "2.0": [0, 0, -25]}}
+      }
+    },
+    "animation.reality_orb.gravity_boots.idle": {
+      "loop": true, "animation_length": 2.0,
+      "bones": {
+        "root": {"rotation": {"0.0": [0, 0, -8], "1.0": [0, 144, 8], "2.0": [0, 288, -8]}, "scale": {"0.0": [1.0, 1.0, 1.0], "1.0": [1.05, 1.05, 1.05], "2.0": [1.0, 1.0, 1.0]}},
+        "inner_core": {"rotation": {"0.0": [0, 0, 0], "2.0": [0, -288, 0]}},
+        "orbit_ring": {"rotation": {"0.0": [0, 0, -25], "1.0": [0, 0, 25], "2.0": [0, 0, -25]}}
+      }
+    },
+    "animation.reality_orb.ki_blast.idle": {
+      "loop": true, "animation_length": 2.0,
+      "bones": {
+        "root": {"rotation": {"0.0": [0, 0, 0], "1.0": [0, 225, 0], "2.0": [0, 450, 0]}, "scale": {"0.0": [1.0, 1.0, 1.0], "1.0": [1.07, 1.07, 1.07], "2.0": [1.0, 1.0, 1.0]}},
+        "inner_core": {"rotation": {"0.0": [0, 0, 0], "2.0": [0, -450, 0]}},
+        "orbit_ring": {"rotation": {"0.0": [0, 0, -25], "1.0": [0, 0, 25], "2.0": [0, 0, -25]}}
+      }
+    },
+    "animation.reality_orb.kamehameha.idle": {
+      "loop": true, "animation_length": 2.0,
+      "bones": {
+        "root": {"rotation": {"0.0": [0, 0, 0], "1.0": [0, 324, 0], "2.0": [0, 648, 0]}, "scale": {"0.0": [1.0, 1.0, 1.0], "1.0": [1.11, 1.11, 1.11], "2.0": [1.0, 1.0, 1.0]}},
+        "inner_core": {"rotation": {"0.0": [0, 0, 0], "2.0": [0, -648, 0]}},
+        "orbit_ring": {"rotation": {"0.0": [0, 0, -25], "1.0": [0, 0, 25], "2.0": [0, 0, -25]}}
+      }
+    },
+    "animation.reality_orb.x_ray_vision.idle": {
+      "loop": true, "animation_length": 2.0,
+      "bones": {
+        "root": {"rotation": {"0.0": [0, 0, -5], "1.0": [0, 108, 5], "2.0": [0, 216, -5]}, "scale": {"0.0": [1.0, 1.0, 1.0], "1.0": [1.04, 1.04, 1.04], "2.0": [1.0, 1.0, 1.0]}},
+        "inner_core": {"rotation": {"0.0": [0, 0, 0], "2.0": [0, -216, 0]}},
+        "orbit_ring": {"rotation": {"0.0": [0, 0, -25], "1.0": [0, 0, 25], "2.0": [0, 0, -25]}}
+      }
+    },
+    "animation.reality_orb.mind_reading.idle": {
+      "loop": true, "animation_length": 2.0,
+      "bones": {
+        "root": {"rotation": {"0.0": [0, 0, -12], "1.0": [0, 162, 12], "2.0": [0, 324, -12]}, "scale": {"0.0": [1.0, 1.0, 1.0], "1.0": [1.05, 1.05, 1.05], "2.0": [1.0, 1.0, 1.0]}},
+        "inner_core": {"rotation": {"0.0": [0, 0, 0], "2.0": [0, -324, 0]}},
+        "orbit_ring": {"rotation": {"0.0": [0, 0, -25], "1.0": [0, 0, 25], "2.0": [0, 0, -25]}}
+      }
+    },
+    "animation.reality_orb.time_warp.idle": {
+      "loop": true, "animation_length": 2.0,
+      "bones": {
+        "root": {"rotation": {"0.0": [0, 0, -6], "1.0": [0, 90, 6], "2.0": [0, 180, -6]}, "scale": {"0.0": [1.0, 1.0, 1.0], "1.0": [1.03, 1.03, 1.03], "2.0": [1.0, 1.0, 1.0]}},
+        "inner_core": {"rotation": {"0.0": [0, 0, 0], "2.0": [0, -180, 0]}},
+        "orbit_ring": {"rotation": {"0.0": [0, 0, -25], "1.0": [0, 0, 25], "2.0": [0, 0, -25]}}
+      }
+    },
+    "animation.reality_orb.phase_shift.idle": {
+      "loop": true, "animation_length": 2.0,
+      "bones": {
+        "root": {"rotation": {"0.0": [0, 0, -20], "1.0": [0, 243, 20], "2.0": [0, 486, -20]}, "scale": {"0.0": [1.0, 1.0, 1.0], "1.0": [1.08, 1.08, 1.08], "2.0": [1.0, 1.0, 1.0]}},
+        "inner_core": {"rotation": {"0.0": [0, 0, 0], "2.0": [0, -486, 0]}},
+        "orbit_ring": {"rotation": {"0.0": [0, 0, -25], "1.0": [0, 0, 25], "2.0": [0, 0, -25]}}
+      }
+    },
+    "animation.reality_orb.void_pulse.idle": {
+      "loop": true, "animation_length": 2.0,
+      "bones": {
+        "root": {"rotation": {"0.0": [0, 0, 0], "1.0": [0, 126, 0], "2.0": [0, 252, 0]}, "scale": {"0.0": [1.0, 1.0, 1.0], "1.0": [1.04, 1.04, 1.04], "2.0": [1.0, 1.0, 1.0]}},
+        "inner_core": {"rotation": {"0.0": [0, 0, 0], "2.0": [0, -252, 0]}},
+        "orbit_ring": {"rotation": {"0.0": [0, 0, -25], "1.0": [0, 0, 25], "2.0": [0, 0, -25]}}
+      }
+    },
+    "animation.reality_orb.black_hole.idle": {
+      "loop": true, "animation_length": 2.0,
+      "bones": {
+        "root": {"rotation": {"0.0": [0, 0, 0], "1.0": [0, 63, 0], "2.0": [0, 126, 0]}, "scale": {"0.0": [1.0, 1.0, 1.0], "1.0": [1.02, 1.02, 1.02], "2.0": [1.0, 1.0, 1.0]}},
+        "inner_core": {"rotation": {"0.0": [0, 0, 0], "2.0": [0, -126, 0]}},
+        "orbit_ring": {"rotation": {"0.0": [0, 0, -25], "1.0": [0, 0, 25], "2.0": [0, 0, -25]}}
+      }
+    },
+    "animation.reality_orb.reality_rift.idle": {
+      "loop": true, "animation_length": 2.0,
+      "bones": {
+        "root": {"rotation": {"0.0": [0, 0, -25], "1.0": [0, 180, 25], "2.0": [0, 360, -25]}, "scale": {"0.0": [1.0, 1.0, 1.0], "1.0": [1.06, 1.06, 1.06], "2.0": [1.0, 1.0, 1.0]}},
+        "inner_core": {"rotation": {"0.0": [0, 0, 0], "2.0": [0, -360, 0]}},
+        "orbit_ring": {"rotation": {"0.0": [0, 0, -25], "1.0": [0, 0, 25], "2.0": [0, 0, -25]}}
+      }
+    },
+    "animation.reality_orb.lightning_spear.idle": {
+      "loop": true, "animation_length": 2.0,
+      "bones": {
+        "root": {"rotation": {"0.0": [0, 0, 0], "1.0": [0, 306, 0], "2.0": [0, 612, 0]}, "scale": {"0.0": [1.0, 1.0, 1.0], "1.0": [1.10, 1.10, 1.10], "2.0": [1.0, 1.0, 1.0]}},
+        "inner_core": {"rotation": {"0.0": [0, 0, 0], "2.0": [0, -612, 0]}},
+        "orbit_ring": {"rotation": {"0.0": [0, 0, -25], "1.0": [0, 0, 25], "2.0": [0, 0, -25]}}
+      }
+    }
+  }
+}
