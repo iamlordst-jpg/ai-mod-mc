@@ -21,6 +21,23 @@ public final class TelekinesisHandler {
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase != TickEvent.Phase.END || event.player.level().isClientSide) return;
         Player player = event.player;
+        // Apply the brief Time Stop field while a player is ticking in the affected area.
+        if (player.level() instanceof ServerLevel world) {
+            int now = world.getServer().getTickCount();
+            for (LivingEntity entity : world.getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(32.0), e -> e != player && e.getPersistentData().contains("realitybending_time_stop_until"))) {
+                var data = entity.getPersistentData();
+                if (data.getInt("realitybending_time_stop_until") > now) {
+                    if (!data.contains("realitybending_time_stop_old_noai")) data.putBoolean("realitybending_time_stop_old_noai", entity.isNoAi());
+                    entity.setNoAi(true);
+                    entity.setDeltaMovement(Vec3.ZERO);
+                    entity.hurtMarked = true;
+                } else {
+                    entity.setNoAi(data.getBoolean("realitybending_time_stop_old_noai"));
+                    data.remove("realitybending_time_stop_old_noai");
+                    data.remove("realitybending_time_stop_until");
+                }
+            }
+        }
         if (!player.getPersistentData().getBoolean("realitybending_telekinesis_enabled")) {
             releaseHeld(player);
             return;
