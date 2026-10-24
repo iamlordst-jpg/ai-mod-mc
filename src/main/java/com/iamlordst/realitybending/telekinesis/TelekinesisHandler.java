@@ -24,7 +24,7 @@ public final class TelekinesisHandler {
         // Apply the brief Time Stop field while a player is ticking in the affected area.
         if (player.level() instanceof ServerLevel world) {
             int now = world.getServer().getTickCount();
-            for (LivingEntity entity : world.getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(32.0), e -> e != player && e.getPersistentData().contains("realitybending_time_stop_until"))) {
+            for (net.minecraft.world.entity.Mob entity : world.getEntitiesOfClass(net.minecraft.world.entity.Mob.class, player.getBoundingBox().inflate(32.0), e -> e != player && e.getPersistentData().contains("realitybending_time_stop_until"))) {
                 var data = entity.getPersistentData();
                 if (data.getInt("realitybending_time_stop_until") > now) {
                     if (!data.contains("realitybending_time_stop_old_noai")) data.putBoolean("realitybending_time_stop_old_noai", entity.isNoAi());
