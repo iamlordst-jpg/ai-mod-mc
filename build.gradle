@@ -9,6 +9,7 @@ base { archivesName = 'realitybending' }
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 repositories {
+    maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
     maven {
         name = 'GeckoLib'
         url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
@@ -32,6 +33,8 @@ minecraft {
 dependencies {
     minecraft 'net.minecraftforge:forge:1.20.1-47.2.0'
     implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.20.1:4.7.1')
+    compileOnly 'org.spongepowered:mixin:0.8.5'
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
 tasks.named('jar', Jar).configure {
@@ -40,7 +43,8 @@ tasks.named('jar', Jar).configure {
         'Specification-Vendor': 'iamlordst-jpg',
         'Specification-Version': '1',
         'Implementation-Title': project.name,
-        'Implementation-Version': project.version
+        'Implementation-Version': project.version,
+        'MixinConfigs': 'realitybending.mixins.json'
     ]) }
     finalizedBy 'reobfJar'
 }
