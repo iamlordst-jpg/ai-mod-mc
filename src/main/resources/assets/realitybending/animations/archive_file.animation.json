@@ -1,0 +1,17 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.archive_file.idle": {
+      "loop": true,
+      "animation_length": 3.0,
+      "bones": {
+        "root": {
+          "rotation": {"0.0": [0, 0, -2], "1.5": [0, 0, 2], "3.0": [0, 0, -2]},
+          "position": {"0.0": [0, 0, 0], "1.5": [0, 0.35, 0], "3.0": [0, 0, 0]}
+        },
+        "seal": {"rotation": {"0.0": [0, 0, 0], "1.5": [0, 0, 180], "3.0": [0, 0, 360]}},
+        "archive_tabs": {"rotation": {"0.0": [0, 0, -3], "1.5": [0, 0, 3], "3.0": [0, 0, -3]}}
+      }
+    }
+  }
+}
