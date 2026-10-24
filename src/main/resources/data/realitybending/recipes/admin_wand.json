@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "minecraft:blaze_rod" },
+    { "item": "minecraft:nether_star" },
+    { "item": "minecraft:amethyst_shard" }
+  ],
+  "result": { "item": "realitybending:admin_wand", "count": 1 }
+}
