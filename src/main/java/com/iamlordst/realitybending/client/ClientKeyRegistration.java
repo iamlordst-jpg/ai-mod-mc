@@ -12,5 +12,7 @@ public final class ClientKeyRegistration {
     @SubscribeEvent
     public static void registerKeys(RegisterKeyMappingsEvent event) {
         event.register(TelekinesisKeybind.TOGGLE);
+        event.register(PowerAbilityKeybind.KI_BLAST);
+        event.register(PowerAbilityKeybind.KAMEHAMEHA);
     }
 }
