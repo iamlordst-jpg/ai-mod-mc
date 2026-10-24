@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "minecraft:beacon" },
+    { "item": "minecraft:paper" },
+    { "item": "minecraft:glow_ink_sac" }
+  ],
+  "result": { "item": "realitybending:meme_beacon", "count": 1 }
+}
