@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "minecraft:quartz" },
+    { "item": "minecraft:gold_nugget" },
+    { "item": "minecraft:amethyst_shard" }
+  ],
+  "result": { "item": "realitybending:chaos_dice", "count": 1 }
+}
