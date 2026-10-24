@@ -32,6 +32,9 @@ public final class ModItems {
     public static final RegistryObject<Item> TIME_WARP = register("time_warp", RealityItem.Power.TIME_WARP, 180);
     public static final RegistryObject<Item> PHASE_SHIFT = register("phase_shift", RealityItem.Power.PHASE_SHIFT, 120);
     public static final RegistryObject<Item> VOID_PULSE = register("void_pulse", RealityItem.Power.VOID_PULSE, 100);
+    public static final RegistryObject<Item> BLACK_HOLE = register("black_hole", RealityItem.Power.BLACK_HOLE, 180);
+    public static final RegistryObject<Item> REALITY_RIFT = register("reality_rift", RealityItem.Power.REALITY_RIFT, 100);
+    public static final RegistryObject<Item> LIGHTNING_SPEAR = register("lightning_spear", RealityItem.Power.LIGHTNING_SPEAR, 120);
 
     private static RegistryObject<Item> register(String name, RealityItem.Power power, int cooldown) {
         return ITEMS.register(name, () -> new RealityItem(power, cooldown, new Item.Properties().stacksTo(1)));
@@ -55,6 +58,9 @@ public final class ModItems {
         output.accept(TIME_WARP.get());
         output.accept(PHASE_SHIFT.get());
         output.accept(VOID_PULSE.get());
+        output.accept(BLACK_HOLE.get());
+        output.accept(REALITY_RIFT.get());
+        output.accept(LIGHTNING_SPEAR.get());
     }
 
     private ModItems() {}
