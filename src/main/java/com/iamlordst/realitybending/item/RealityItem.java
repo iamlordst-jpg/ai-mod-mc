@@ -24,7 +24,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-public final class RealityItem extends Item {
+public class RealityItem extends Item {
     public enum Power { FORUM_PHANTOM_MASK, REALITY_CHECK, PLOT_ARMOR, LAG_SPIKE,
         POCKET_DIMENSION, ADMIN_WAND, CHAOS_DICE, MEME_BEACON, GRAVITY_BOOTS,
         KI_BLAST, KAMEHAMEHA, X_RAY_VISION, MIND_READING, TIME_WARP, PHASE_SHIFT, VOID_PULSE, BLACK_HOLE, REALITY_RIFT, LIGHTNING_SPEAR }
