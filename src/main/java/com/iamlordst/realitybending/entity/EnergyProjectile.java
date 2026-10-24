@@ -65,19 +65,18 @@ public final class EnergyProjectile extends Entity {
                 if(distance<1.35&&tickCount>12){Vec3 at=target.position();float h=target.getBbHeight();target.discard();if(level() instanceof ServerLevel s){s.sendParticles(ParticleTypes.REVERSE_PORTAL,at.x,at.y+h*.5,at.z,30,.3,.4,.3,.1);s.sendParticles(ParticleTypes.POOF,at.x,at.y,at.z,12,.2,.2,.2,.04);}}
             }return;
         }
-        Vec3 motion=getDeltaMovement();Vec3 next=position().add(motion);setPos(next.x,next.y,next.z);
+        Vec3 motion=getDeltaMovement();Vec3 previous=position();Vec3 next=previous.add(motion);
         if(tickCount>80||!level().isLoaded(blockPosition())){discard();return;}
-        if(level().isClientSide)return;
+        if(level().isClientSide){setPos(next.x,next.y,next.z);return;}
+        var blockHit=level().clip(new net.minecraft.world.level.ClipContext(previous,next,net.minecraft.world.level.ClipContext.Block.COLLIDER,net.minecraft.world.level.ClipContext.Fluid.NONE,this));
+        if(blockHit.getType()==net.minecraft.world.phys.HitResult.Type.BLOCK){setPos(blockHit.getLocation().x,blockHit.getLocation().y,blockHit.getLocation().z);impact(blockHit.getBlockPos());discard();return;}
+        setPos(next.x,next.y,next.z);
         if((visualType()==0||visualType()==4||visualType()==5)&&level() instanceof ServerLevel s){
             s.sendParticles((visualType()==4?ParticleTypes.ELECTRIC_SPARK:visualType()==5?ParticleTypes.HAPPY_VILLAGER:ParticleTypes.END_ROD),getX(),getY(),getZ(),visualType()==4?12:visualType()==5?18:12,.14,.14,.14,.12);
             s.sendParticles(ParticleTypes.GLOW,getX(),getY(),getZ(),8,.1,.1,.1,.04);
             s.sendParticles(ParticleTypes.ELECTRIC_SPARK,getX(),getY(),getZ(),4,.1,.1,.1,.18);
         }
         BlockPos hitPos=blockPosition();
-        if(!level().getBlockState(hitPos).getCollisionShape(level(),hitPos).isEmpty()){
-            impact(hitPos);
-            discard();return;
-        }
         for(LivingEntity target:level().getEntitiesOfClass(LivingEntity.class,getBoundingBox().inflate(visualType()==4?.45:.38),e->e.isAlive()&&e.getId()!=ownerId())){
             Entity owner=level().getEntity(ownerId());
             target.hurt(owner instanceof Player p?level().damageSources().playerAttack(p):level().damageSources().magic(),(visualType()==4?10F:9F)+charge()*12F);
