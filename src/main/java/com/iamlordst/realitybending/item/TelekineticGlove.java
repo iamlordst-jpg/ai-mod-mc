@@ -15,14 +15,12 @@ public final class TelekineticGlove extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (!level.isClientSide) {
-            boolean enabled = !stack.getOrCreateTag().getBoolean("TelekinesisEnabled");
-            stack.getOrCreateTag().putBoolean("TelekinesisEnabled", enabled);
-            player.displayClientMessage(Component.literal("Telekinesis " + (enabled ? "ENABLED" : "DISABLED")
-                + " — hold this glove and aim at an entity."), true);
-            level.playSound(null, player.blockPosition(), enabled
-                ? net.minecraft.sounds.SoundEvents.BEACON_ACTIVATE
-                : net.minecraft.sounds.SoundEvents.BEACON_DEACTIVATE,
-                net.minecraft.sounds.SoundSource.PLAYERS, 0.7F, 1.2F);
+            player.getPersistentData().putBoolean("realitybending_telekinesis_unlocked", true);
+            player.getPersistentData().putBoolean("realitybending_telekinesis_enabled", true);
+            player.displayClientMessage(Component.literal("TELEKINESIS UNLOCKED! Press G to toggle it. You no longer need to hold this item."), true);
+            level.playSound(null, player.blockPosition(), net.minecraft.sounds.SoundEvents.BEACON_ACTIVATE,
+                net.minecraft.sounds.SoundSource.PLAYERS, 0.8F, 1.25F);
+            if (!player.getAbilities().instabuild) stack.shrink(1);
         }
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
     }
