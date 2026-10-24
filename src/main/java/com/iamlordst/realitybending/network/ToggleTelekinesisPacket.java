@@ -15,7 +15,8 @@ public final class ToggleTelekinesisPacket {
     public static void handle(ToggleTelekinesisPacket packet, Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
-            if (context.getSender() instanceof ServerPlayer player) {
+            ServerPlayer player = context.getSender();
+            if (player != null) {
                 if (!player.getPersistentData().getBoolean("realitybending_telekinesis_unlocked")) {
                     player.displayClientMessage(Component.literal("You haven't unlocked telekinesis yet. Use the Telekinesis Unlock item first."), true);
                     return;
