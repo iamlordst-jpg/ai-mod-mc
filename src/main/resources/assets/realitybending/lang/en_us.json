@@ -32,5 +32,16 @@
   "subtitles.realitybending.kamehameha_release": "Kamehameha unleashed",
   "subtitles.realitybending.void_cast": "Void energy pulses",
   "subtitles.realitybending.rift_cast": "Reality rift opens",
-  "subtitles.realitybending.lightning_cast": "Lightning power unleashed"
+  "subtitles.realitybending.lightning_cast": "Lightning power unleashed",
+  "subtitles.realitybending.fedora_activate": "Parody relic activates",
+  "subtitles.realitybending.time_warp_cast": "Time distortion activates",
+  "subtitles.realitybending.telepathy_cast": "Telepathy pulse",
+  "subtitles.realitybending.gravity_cast": "Gravity shifts",
+  "subtitles.realitybending.defense_cast": "Protective aura activates",
+  "subtitles.realitybending.chaos_cast": "Chaos energy activates",
+  "subtitles.realitybending.admin_cast": "Admin power activates",
+  "subtitles.realitybending.phase_cast": "Phase shift activates",
+  "subtitles.realitybending.lag_cast": "Lag spike activates",
+  "subtitles.realitybending.reveal_cast": "Revelation pulse",
+  "subtitles.realitybending.meme_beacon_cast": "Meme beacon activates"
 }
