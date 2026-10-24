@@ -455,7 +455,7 @@ public class RealityItem extends Item {
         }
     }
 
-    private void fireKamehameha(Level level, Player player, double charge) {
+    public static void fireKamehameha(Level level, Player player, double charge) {
         Vec3 start = player.getEyePosition().add(player.getLookAngle().normalize().scale(1.0));
         Vec3 direction = player.getLookAngle().normalize();
         double maxLength = 32.0 + charge * 12.0;
