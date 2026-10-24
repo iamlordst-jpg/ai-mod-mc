@@ -5,6 +5,7 @@ import com.iamlordst.realitybending.entity.EnergyProjectile;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -51,17 +52,17 @@ public final class EnergyProjectileRenderer extends EntityRenderer<EnergyProject
     }
     private static void vertex(VertexConsumer o, PoseStack.Pose p, float r, double v, double u, float tu, float tv, float cr, float cg, float cb, float a) {
         float x=(float)(r*Math.sin(v)*Math.cos(u)), y=(float)(r*Math.cos(v)), z=(float)(r*Math.sin(v)*Math.sin(u));
-        o.vertex(p,x,y,z).color(cr,cg,cb,a).uv(tu,tv).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).normal(p,0,1,0).endVertex();
+        o.vertex(p.pose(),x,y,z).color(cr,cg,cb,a).uv(tu,tv).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).normal(p.normal(),0,1,0).endVertex();
     }
     private static void drawTube(VertexConsumer o, PoseStack.Pose p, float r, float length, float cr, float cg, float cb, float a) {
         int sides=32;
         for(int i=0;i<sides;i++) {
             double a0=2*Math.PI*i/sides, a1=2*Math.PI*(i+1)/sides;
             float x0=(float)Math.cos(a0)*r,y0=(float)Math.sin(a0)*r,x1=(float)Math.cos(a1)*r,y1=(float)Math.sin(a1)*r;
-            o.vertex(p,x0,y0,0).color(cr,cg,cb,a).uv((float)i/sides,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).normal(p,x0,y0,0).endVertex();
-            o.vertex(p,x1,y1,0).color(cr,cg,cb,a).uv((float)(i+1)/sides,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).normal(p,x1,y1,0).endVertex();
-            o.vertex(p,x1,y1,length).color(cr,cg,cb,a).uv((float)(i+1)/sides,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).normal(p,x1,y1,0).endVertex();
-            o.vertex(p,x0,y0,length).color(cr,cg,cb,a).uv((float)i/sides,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).normal(p,x0,y0,0).endVertex();
+            o.vertex(p.pose(),x0,y0,0).color(cr,cg,cb,a).uv((float)i/sides,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).normal(p.normal(),x0,y0,0).endVertex();
+            o.vertex(p.pose(),x1,y1,0).color(cr,cg,cb,a).uv((float)(i+1)/sides,0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).normal(p.normal(),x1,y1,0).endVertex();
+            o.vertex(p.pose(),x1,y1,length).color(cr,cg,cb,a).uv((float)(i+1)/sides,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).normal(p.normal(),x1,y1,0).endVertex();
+            o.vertex(p.pose(),x0,y0,length).color(cr,cg,cb,a).uv((float)i/sides,1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).normal(p.normal(),x0,y0,0).endVertex();
         }
     }
     @Override public ResourceLocation getTextureLocation(EnergyProjectile entity) { return TEXTURE; }
