@@ -1,0 +1,16 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [{
+    "description": {"identifier": "geometry.pocket_dimension", "texture_width": 16, "texture_height": 16, "visible_bounds_width": 2.0, "visible_bounds_height": 2.0, "visible_bounds_offset": [0, 0.3, 0]},
+    "bones": [
+      {"name": "root", "pivot": [0, 0, 0], "cubes": [
+            {"origin": [-4, -4, -1], "size": [1, 8, 2], "uv": [0, 0]},
+            {"origin": [3, -4, -1], "size": [1, 8, 2], "uv": [0, 0]},
+            {"origin": [-3, -4, -1], "size": [6, 1, 2], "uv": [0, 0]},
+            {"origin": [-3, 3, -1], "size": [6, 1, 2], "uv": [0, 0]}
+      ]},
+      {"name": "inner_core", "parent": "root", "pivot": [0, 0, 0], "cubes": [{"origin": [-1.5, -1.5, -1.5], "size": [3, 3, 3], "uv": [0, 0], "inflate": 0.05}]},
+      {"name": "orbit_ring", "parent": "root", "pivot": [0, 0, 0], "cubes": [{"origin": [-4, -0.5, -0.5], "size": [8, 1, 1], "uv": [0, 0]}, {"origin": [-0.5, -4, -0.5], "size": [1, 8, 1], "uv": [0, 0]}]}
+    ]
+  }]
+}
