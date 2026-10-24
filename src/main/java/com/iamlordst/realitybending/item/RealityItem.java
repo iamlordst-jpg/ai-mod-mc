@@ -25,7 +25,7 @@ import java.util.List;
 public final class RealityItem extends Item {
     public enum Power { FORUM_PHANTOM_MASK, REALITY_CHECK, PLOT_ARMOR, LAG_SPIKE,
         POCKET_DIMENSION, ADMIN_WAND, CHAOS_DICE, MEME_BEACON, GRAVITY_BOOTS,
-        KI_BLAST, KAMEHAMEHA, X_RAY_VISION, MIND_READING, TIME_WARP, PHASE_SHIFT, VOID_PULSE }
+        KI_BLAST, KAMEHAMEHA, X_RAY_VISION, MIND_READING, TIME_WARP, PHASE_SHIFT, VOID_PULSE, BLACK_HOLE, REALITY_RIFT, LIGHTNING_SPEAR }
 
     private final Power power;
     private final int cooldown;
@@ -219,6 +219,74 @@ public final class RealityItem extends Item {
                         target.getZ(), 24, .5, .5, .5, .35);
                 }
                 player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 80, 2));
+                return true;
+            }
+            case BLACK_HOLE -> {
+                Vec3 center = player.getEyePosition().add(player.getLookAngle().normalize().scale(8));
+                List<LivingEntity> targets = level.getEntitiesOfClass(LivingEntity.class,
+                    new AABB(center, center).inflate(10), e -> e != player);
+                for (LivingEntity target : targets) {
+                    Vec3 pull = center.subtract(target.position().add(0, target.getBbHeight() * .5, 0));
+                    double distance = Math.max(1.0, pull.length());
+                    target.setDeltaMovement(pull.normalize().scale(Math.min(2.8, 12.0 / distance)));
+                    target.hurtMarked = true;
+                }
+                if (level instanceof ServerLevel server) {
+                    for (int i = 0; i < 36; i++) {
+                        double angle = i * Math.PI / 9.0;
+                        double radius = 1.2 + (i % 4) * .35;
+                        server.sendParticles(ParticleTypes.REVERSE_PORTAL, center.x + Math.cos(angle) * radius,
+                            center.y + Math.sin(angle) * radius, center.z, 2, .08, .08, .08, .02);
+                    }
+                    server.sendParticles(ParticleTypes.PORTAL, center.x, center.y, center.z, 60, 1.1, 1.1, 1.1, .25);
+                }
+                level.playSound(null, BlockPos.containing(center), net.minecraft.sounds.SoundEvents.WARDEN_SONIC_CHARGE,
+                    net.minecraft.sounds.SoundSource.PLAYERS, 1.2F, .55F);
+                return true;
+            }
+            case REALITY_RIFT -> {
+                Vec3 look = player.getLookAngle().normalize();
+                List<LivingEntity> targets = level.getEntitiesOfClass(LivingEntity.class,
+                    player.getBoundingBox().inflate(24), e -> e != player && e.isAlive());
+                LivingEntity target = targets.stream()
+                    .filter(e -> e.position().subtract(player.position()).dot(look) > 2)
+                    .min((a, b) -> Double.compare(a.distanceToSqr(player), b.distanceToSqr(player)))
+                    .orElse(null);
+                if (target == null) return false;
+                Vec3 behind = target.position().subtract(target.getLookAngle().normalize().scale(2.0));
+                BlockPos feet = BlockPos.containing(behind);
+                if (!level.getBlockState(feet).getCollisionShape(level, feet).isEmpty()
+                    || !level.getBlockState(feet.above()).getCollisionShape(level, feet.above()).isEmpty()
+                    || level.getBlockState(feet.below()).getCollisionShape(level, feet.below()).isEmpty()) {
+                    behind = target.position().add(0, 0, 2);
+                    feet = BlockPos.containing(behind);
+                }
+                player.teleportTo(feet.getX() + .5, feet.getY(), feet.getZ() + .5);
+                player.fallDistance = 0;
+                if (level instanceof ServerLevel server) {
+                    server.sendParticles(ParticleTypes.PORTAL, target.getX(), target.getY() + .8, target.getZ(), 35, .5, .7, .5, .2);
+                    server.sendParticles(ParticleTypes.REVERSE_PORTAL, player.getX(), player.getY() + .8, player.getZ(), 35, .5, .7, .5, .2);
+                }
+                return true;
+            }
+            case LIGHTNING_SPEAR -> {
+                Vec3 start = player.getEyePosition();
+                Vec3 end = start.add(player.getLookAngle().normalize().scale(36));
+                BlockHitResult hit = level.clip(new net.minecraft.world.level.ClipContext(start, end,
+                    net.minecraft.world.level.ClipContext.Block.COLLIDER,
+                    net.minecraft.world.level.ClipContext.Fluid.NONE, player));
+                Vec3 strike = hit.getType() == HitResult.Type.BLOCK ? hit.getLocation() : end;
+                net.minecraft.world.entity.LightningBolt bolt = net.minecraft.world.entity.EntityType.LIGHTNING_BOLT.create(level);
+                if (bolt != null) {
+                    bolt.moveTo(strike.x, strike.y, strike.z);
+                    level.addFreshEntity(bolt);
+                }
+                if (level instanceof ServerLevel server) {
+                    server.sendParticles(ParticleTypes.ELECTRIC_SPARK, start.x, start.y, start.z, 35, .3, .3, .3, .25);
+                    server.sendParticles(ParticleTypes.FLASH, strike.x, strike.y, strike.z, 1, 0, 0, 0, 0);
+                }
+                level.playSound(null, BlockPos.containing(strike), net.minecraft.sounds.SoundEvents.LIGHTNING_BOLT_THUNDER,
+                    net.minecraft.sounds.SoundSource.PLAYERS, 1.4F, 1.25F);
                 return true;
             }
         }
