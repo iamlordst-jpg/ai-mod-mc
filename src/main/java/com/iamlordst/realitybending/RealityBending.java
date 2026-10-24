@@ -1,5 +1,6 @@
 package com.iamlordst.realitybending;
 
+import com.iamlordst.realitybending.network.ModNetwork;
 import com.iamlordst.realitybending.registry.ModItems;
 import com.iamlordst.realitybending.telekinesis.TelekinesisHandler;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -17,6 +18,7 @@ public final class RealityBending {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         ModItems.ITEMS.register(bus);
         bus.addListener(this::addCreative);
+        ModNetwork.register();
         MinecraftForge.EVENT_BUS.addListener(TelekinesisHandler::onPlayerTick);
     }
 
