@@ -1,10 +1,8 @@
 package com.iamlordst.realitybending.telekinesis;
 
-import com.iamlordst.realitybending.item.TelekineticGlove;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -17,9 +15,8 @@ public final class TelekinesisHandler {
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase != TickEvent.Phase.END || event.player.level().isClientSide) return;
         Player player = event.player;
-        ItemStack stack = player.getMainHandItem();
-        if (!(stack.getItem() instanceof TelekineticGlove)
-            || !stack.getOrCreateTag().getBoolean("TelekinesisEnabled")) return;
+        if (!player.getPersistentData().getBoolean("realitybending_telekinesis_unlocked")
+            || !player.getPersistentData().getBoolean("realitybending_telekinesis_enabled")) return;
 
         Vec3 start = player.getEyePosition();
         Vec3 end = start.add(player.getLookAngle().scale(14.0));
