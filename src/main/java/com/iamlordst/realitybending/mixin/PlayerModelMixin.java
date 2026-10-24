@@ -23,7 +23,8 @@ public abstract class PlayerModelMixin {
         ItemStack using = player.getUseItem();
         if (player.isUsingItem() && using.getItem() instanceof RealityItem item) {
             if (item.getPowerType() == RealityItem.Power.KAMEHAMEHA) {
-                // Both hands together in front of the chest, ready to push the beam forward.
+                // Two hands together, with a small forward lean during the beam charge.
+                model.body.xRot = -0.10F;
                 model.rightArm.xRot = -1.48F;
                 model.leftArm.xRot = -1.48F;
                 model.rightArm.yRot = -0.26F;
@@ -32,6 +33,7 @@ public abstract class PlayerModelMixin {
                 model.leftArm.zRot = 0.12F;
             } else if (item.getPowerType() == RealityItem.Power.KI_BLAST) {
                 // Forward palm with the off-hand pulled back as a brace.
+                model.body.xRot = -0.06F;
                 model.rightArm.xRot = -1.52F;
                 model.leftArm.xRot = -1.12F;
                 model.rightArm.yRot = -0.18F;
@@ -41,6 +43,7 @@ public abstract class PlayerModelMixin {
             } else {
                 return;
             }
+            model.jacket.copyFrom(model.body);
             model.rightSleeve.copyFrom(model.rightArm);
             model.leftSleeve.copyFrom(model.leftArm);
             return;
@@ -56,6 +59,7 @@ public abstract class PlayerModelMixin {
             model.leftArm.yRot = 0.32F;
             model.rightArm.zRot = -0.42F;
             model.leftArm.zRot = 0.42F;
+            model.jacket.copyFrom(model.body);
             model.rightSleeve.copyFrom(model.rightArm);
             model.leftSleeve.copyFrom(model.leftArm);
         }
