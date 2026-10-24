@@ -134,7 +134,7 @@ public final class RealityItem extends Item {
             case KI_BLAST -> {
                 Vec3 look = player.getLookAngle().normalize();
                 Vec3 origin = player.getEyePosition().add(look.scale(0.8));
-                SmallFireball blast = new SmallFireball(level, player, look);
+                SmallFireball blast = new SmallFireball(level, player, look.x, look.y, look.z);
                 blast.setPos(origin.x, origin.y, origin.z);
                 blast.setSecondsOnFire(0);
                 level.addFreshEntity(blast);
