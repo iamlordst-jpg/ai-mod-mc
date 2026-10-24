@@ -1,0 +1,127 @@
+{
+  "power_cast": {
+    "subtitle": "subtitles.realitybending.power_cast",
+    "sounds": [
+      {
+        "name": "minecraft:entity/ender_dragon/flap",
+        "volume": 0.7,
+        "pitch": 1.35
+      },
+      {
+        "name": "minecraft:block/amethyst_block/chime",
+        "volume": 0.5,
+        "pitch": 1.25
+      }
+    ]
+  },
+  "ki_charge": {
+    "subtitle": "subtitles.realitybending.ki_charge",
+    "sounds": [
+      {
+        "name": "minecraft:entity/guardian/attack",
+        "volume": 0.65,
+        "pitch": 1.65
+      },
+      {
+        "name": "minecraft:block/beacon/ambient",
+        "volume": 0.55,
+        "pitch": 1.6
+      }
+    ]
+  },
+  "ki_release": {
+    "subtitle": "subtitles.realitybending.ki_release",
+    "sounds": [
+      {
+        "name": "minecraft:entity/ghast/shoot",
+        "volume": 1,
+        "pitch": 1.55
+      },
+      {
+        "name": "minecraft:entity/firework_rocket/blast",
+        "volume": 0.65,
+        "pitch": 1.35
+      }
+    ]
+  },
+  "kamehameha_charge": {
+    "subtitle": "subtitles.realitybending.kamehameha_charge",
+    "sounds": [
+      {
+        "name": "minecraft:entity/guardian/attack",
+        "volume": 0.85,
+        "pitch": 1.25
+      },
+      {
+        "name": "minecraft:block/beacon/ambient",
+        "volume": 0.85,
+        "pitch": 1.15
+      },
+      {
+        "name": "minecraft:entity/warden/heartbeat",
+        "volume": 0.5,
+        "pitch": 1.7
+      }
+    ]
+  },
+  "kamehameha_release": {
+    "subtitle": "subtitles.realitybending.kamehameha_release",
+    "sounds": [
+      {
+        "name": "minecraft:entity/warden/sonic_boom",
+        "volume": 1,
+        "pitch": 1.25
+      },
+      {
+        "name": "minecraft:entity/ender_dragon/growl",
+        "volume": 0.7,
+        "pitch": 1.7
+      }
+    ]
+  },
+  "void_cast": {
+    "subtitle": "subtitles.realitybending.void_cast",
+    "sounds": [
+      {
+        "name": "minecraft:entity/warden/sonic_charge",
+        "volume": 0.8,
+        "pitch": 0.7
+      },
+      {
+        "name": "minecraft:block/respawn_anchor/charge",
+        "volume": 0.6,
+        "pitch": 0.65
+      }
+    ]
+  },
+  "rift_cast": {
+    "subtitle": "subtitles.realitybending.rift_cast",
+    "sounds": [
+      {
+        "name": "minecraft:entity/enderman/teleport",
+        "volume": 0.8,
+        "pitch": 0.65
+      },
+      {
+        "name": "minecraft:block/portal/trigger",
+        "volume": 0.6,
+        "pitch": 1.15
+      }
+    ]
+  },
+  "lightning_cast": {
+    "subtitle": "subtitles.realitybending.lightning_cast",
+    "sounds": [
+      {
+        "name": "minecraft:entity/lightning_bolt/thunder",
+        "volume": 0.8,
+        "pitch": 1.35
+      },
+      {
+        "name": "minecraft:block/respawn_anchor/deplete",
+        "volume": 0.5,
+        "pitch": 1.6
+      }
+    ]
+  }
+}
