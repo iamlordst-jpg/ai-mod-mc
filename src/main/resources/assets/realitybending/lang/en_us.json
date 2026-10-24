@@ -23,5 +23,14 @@
   "item.realitybending.case_file_salvador_ramos": "Case File: Salvador Ramos (Satire)",
   "item.realitybending.case_file_adam_lanza": "Case File: Adam Lanza (Satire)",
   "item.realitybending.case_file_arthur_achleitner": "Case File: Arthur Achleitner (Satire)",
-  "item.realitybending.case_file_kosta_kecmanovic": "Case File: Kosta Kecmanović (Satire)"
+  "item.realitybending.case_file_kosta_kecmanovic": "Case File: Kosta Kecmanović (Satire)",
+  "item.realitybending.case_file_elliot_rodger": "Case File: Elliot Rodger (Satire)",
+  "subtitles.realitybending.power_cast": "Reality bending power activates",
+  "subtitles.realitybending.ki_charge": "Ki energy charging",
+  "subtitles.realitybending.ki_release": "Ki blast released",
+  "subtitles.realitybending.kamehameha_charge": "Kamehameha charging",
+  "subtitles.realitybending.kamehameha_release": "Kamehameha unleashed",
+  "subtitles.realitybending.void_cast": "Void energy pulses",
+  "subtitles.realitybending.rift_cast": "Reality rift opens",
+  "subtitles.realitybending.lightning_cast": "Lightning power unleashed"
 }
