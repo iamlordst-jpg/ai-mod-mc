@@ -78,20 +78,16 @@ public class RealityItem extends Item {
 
     @Override
     public UseAnim getUseAnimation(ItemStack stack) {
-        return power == Power.KAMEHAMEHA ? UseAnim.SPYGLASS
-            : power == Power.KI_BLAST ? UseAnim.BOW : UseAnim.NONE;
+        // Both techniques use Minecraft's two-handed draw pose while charging.
+        // The custom entity supplies the energy visuals; vanilla particles are not needed.
+        return power == Power.KAMEHAMEHA || power == Power.KI_BLAST ? UseAnim.BOW : UseAnim.NONE;
     }
 
     @Override
     public void onUseTick(Level level, net.minecraft.world.entity.LivingEntity entity, ItemStack stack, int remainingUseDuration) {
         if (!(entity instanceof Player player) || !(level instanceof ServerLevel server) || remainingUseDuration % 2 != 0) return;
-        int elapsed = getUseDuration(stack) - remainingUseDuration;
         Vec3 look = player.getLookAngle().normalize();
-        Vec3 side = look.cross(new Vec3(0, 1, 0));
-        if (side.lengthSqr() < 0.01) side = new Vec3(1, 0, 0);
-        side = side.normalize();
-        Vec3 up = look.cross(side).normalize();
-        Vec3 center = player.getEyePosition().add(look.scale(0.85));
+        Vec3 center = player.getEyePosition().add(look.scale(1.05));
         boolean chargeOrbExists = !server.getEntitiesOfClass(EnergyProjectile.class, player.getBoundingBox().inflate(4.0),
             e -> e.visualType() == 2 && e.ownerId() == player.getId()).isEmpty();
         if (!chargeOrbExists) {
@@ -100,15 +96,8 @@ public class RealityItem extends Item {
             chargeOrb.setPos(center.x, center.y, center.z);
             server.addFreshEntity(chargeOrb);
         }
-        double radius = 0.25 + Math.min(0.65, elapsed / 35.0);
-        for (int i = 0; i < 8; i++) {
-            double angle = elapsed * 0.24 + i * Math.PI / 4.0;
-            Vec3 point = center.add(side.scale(Math.cos(angle) * radius)).add(up.scale(Math.sin(angle) * radius));
-            server.sendParticles(power == Power.KI_BLAST ? ParticleTypes.END_ROD : ParticleTypes.ELECTRIC_SPARK,
-                point.x, point.y, point.z, 1, .015, .015, .015, .01);
-        }
-        server.sendParticles(power == Power.KI_BLAST ? ParticleTypes.SOUL_FIRE_FLAME : ParticleTypes.WAX_ON,
-            center.x, center.y, center.z, 2, .12, .12, .12, .015);
+        // Intentionally no vanilla END_ROD / flame / spark particles here.
+        // The custom rendered charge sphere is the only charging visual.
     }
 
     @Override
@@ -130,10 +119,6 @@ public class RealityItem extends Item {
             blast.setPos(origin.x, origin.y, origin.z);
             blast.setDeltaMovement(look.scale(1.55));
             level.addFreshEntity(blast);
-            if (level instanceof ServerLevel server) {
-                server.sendParticles(ParticleTypes.END_ROD, origin.x, origin.y, origin.z, 18, .16, .16, .16, .08);
-                server.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, origin.x, origin.y, origin.z, 12, .12, .12, .12, .04);
-            }
             level.playSound(null, player.blockPosition(), ModSounds.KI_RELEASE.get(),
                 net.minecraft.sounds.SoundSource.PLAYERS, 1.25F, 1.0F);
         } else if (power == Power.KAMEHAMEHA) {
@@ -427,13 +412,8 @@ public class RealityItem extends Item {
                 sendRing(server, player.position().add(0, .15, 0), ParticleTypes.CLOUD, .85, 24);
                 server.sendParticles(ParticleTypes.POOF, player.getX(), player.getY() + .2, player.getZ(), 14, .25, .05, .25, .03);
             }
-            case KI_BLAST -> {
-                server.sendParticles(ParticleTypes.END_ROD, center.x, center.y, center.z, 24, .2, .2, .2, .08);
-                sendRing(server, center, ParticleTypes.SOUL_FIRE_FLAME, .55, 18);
-            }
-            case KAMEHAMEHA -> {
-                server.sendParticles(ParticleTypes.END_ROD, center.x, center.y, center.z, 32, .35, .35, .35, .1);
-                sendRing(server, center, ParticleTypes.ELECTRIC_SPARK, .8, 24);
+            case KI_BLAST, KAMEHAMEHA -> {
+                // These powers use the custom 3D energy renderer, not vanilla particles.
             }
             case X_RAY_VISION, MIND_READING -> {
                 sendRing(server, center, ParticleTypes.ENCHANT, 1.0, 24);
@@ -492,19 +472,8 @@ public class RealityItem extends Item {
         beamVisual.setPos(start.x, start.y, start.z);
         beamVisual.setDeltaMovement(direction);
         level.addFreshEntity(beamVisual);
-        if (level instanceof ServerLevel server) {
-            for (double d = 0; d < length; d += 0.22) {
-                Vec3 point = start.add(direction.scale(d));
-                double pulse = 0.07 + 0.05 * Math.sin(d * 1.7 + player.tickCount);
-                server.sendParticles(ParticleTypes.END_ROD, point.x, point.y, point.z, 2, thickness * .16, thickness * .16, thickness * .16, .01);
-                server.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, point.x, point.y, point.z, 2, pulse, pulse, pulse, .015);
-                if (((int)(d * 10)) % 4 == 0) server.sendParticles(ParticleTypes.ELECTRIC_SPARK,
-                    point.x, point.y, point.z, 1, thickness * .1, thickness * .1, thickness * .1, .02);
-            }
-            server.sendParticles(ParticleTypes.FLASH, beamEnd.x, beamEnd.y, beamEnd.z, 1, 0, 0, 0, 0);
-            server.sendParticles(ParticleTypes.EXPLOSION, beamEnd.x, beamEnd.y, beamEnd.z, 8 + (int)(charge * 12), .4, .4, .4, .08);
-            server.sendParticles(ParticleTypes.END_ROD, beamEnd.x, beamEnd.y, beamEnd.z, 30, .7, .7, .7, .14);
-        }
+        // The custom renderer draws the full beam. Avoid the old vanilla particle trail/orbs.
+
         AABB beamBox = new AABB(start, beamEnd).inflate(thickness);
         List<LivingEntity> targets = level.getEntitiesOfClass(LivingEntity.class, beamBox,
             e -> e != player && e.isAlive() && beamDistanceSquared(e, start, direction, length) < thickness * thickness * 1.8);
@@ -524,5 +493,5 @@ public class RealityItem extends Item {
         return relative.subtract(direction.scale(along)).lengthSqr();
     }
 
-    @Override public boolean isFoil(ItemStack stack) { return true; }
+    @Override public boolean isFoil(ItemStack stack) { return false; }
 }
