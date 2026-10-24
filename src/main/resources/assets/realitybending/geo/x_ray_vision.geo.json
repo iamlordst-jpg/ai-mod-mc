@@ -1,0 +1,15 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [{
+    "description": {"identifier": "geometry.x_ray_vision", "texture_width": 16, "texture_height": 16, "visible_bounds_width": 2.0, "visible_bounds_height": 2.0, "visible_bounds_offset": [0, 0.3, 0]},
+    "bones": [
+      {"name": "root", "pivot": [0, 0, 0], "cubes": [
+            {"origin": [-4, -2, -1], "size": [3, 4, 2], "uv": [0, 0]},
+            {"origin": [1, -2, -1], "size": [3, 4, 2], "uv": [0, 0]},
+            {"origin": [-1, -1, -1], "size": [2, 2, 2], "uv": [0, 0]}
+      ]},
+      {"name": "inner_core", "parent": "root", "pivot": [0, 0, 0], "cubes": [{"origin": [-1.5, -1.5, -1.5], "size": [3, 3, 3], "uv": [0, 0], "inflate": 0.05}]},
+      {"name": "orbit_ring", "parent": "root", "pivot": [0, 0, 0], "cubes": [{"origin": [-4, -0.5, -0.5], "size": [8, 1, 1], "uv": [0, 0]}, {"origin": [-0.5, -4, -0.5], "size": [1, 8, 1], "uv": [0, 0]}]}
+    ]
+  }]
+}
