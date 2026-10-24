@@ -55,6 +55,10 @@ public final class EnergyProjectile extends Entity {
         setPos(getX() + motion.x, getY() + motion.y, getZ() + motion.z);
         if (tickCount > 55 || !level().isLoaded(blockPosition())) { discard(); return; }
         if (level().isClientSide) return;
+        if (visualType() == 0 && tickCount % 1 == 0 && level() instanceof net.minecraft.server.level.ServerLevel server) {
+            server.sendParticles(net.minecraft.core.particles.ParticleTypes.ELECTRIC_SPARK, getX(), getY(), getZ(), 4, .10, .10, .10, .07);
+            server.sendParticles(net.minecraft.core.particles.ParticleTypes.END_ROD, getX(), getY(), getZ(), 1, .04, .04, .04, .01);
+        }
         if (!level().getBlockState(blockPosition()).getCollisionShape(level(), blockPosition()).isEmpty()) { discard(); return; }
         for (LivingEntity target : level().getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(0.22),
                 e -> e.isAlive() && e.getId() != ownerId())) {
