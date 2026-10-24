@@ -13,6 +13,9 @@ import org.lwjgl.glfw.GLFW;
 
 @Mod.EventBusSubscriber(modid = RealityBending.MOD_ID, value = net.minecraftforge.api.distmarker.Dist.CLIENT)
 public final class TelekinesisKeybind {
+    private static boolean locallyEnabled = false;
+
+    public static boolean isLocallyEnabled() { return locallyEnabled; }
     public static final KeyMapping TOGGLE = new KeyMapping(
         "key.realitybending.toggle_telekinesis",
         InputConstants.Type.KEYSYM,
@@ -28,6 +31,7 @@ public final class TelekinesisKeybind {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player == null || minecraft.level == null) return;
         while (TOGGLE.consumeClick()) {
+            locallyEnabled = !locallyEnabled;
             ModNetwork.CHANNEL.sendToServer(new ToggleTelekinesisPacket());
         }
     }
