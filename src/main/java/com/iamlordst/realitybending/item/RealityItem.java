@@ -1,6 +1,7 @@
 package com.iamlordst.realitybending.item;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -63,6 +64,7 @@ public class RealityItem extends Item {
             player.getCooldowns().addCooldown(this, cooldown);
             playPowerSound(level, player);
             spawnCastEffect(level, player);
+            spawnSignatureEffect(level, player);
             return InteractionResultHolder.consume(stack);
         }
         return InteractionResultHolder.fail(stack);
@@ -403,6 +405,93 @@ public class RealityItem extends Item {
         };
         server.sendParticles(particle, center.x, center.y, center.z, 28, .45, .55, .45, .12);
         server.sendParticles(ParticleTypes.WITCH, center.x, center.y, center.z, 10, .35, .4, .35, .03);
+    }
+
+    /** A distinct, lightweight particle signature for every power activation. */
+    private void spawnSignatureEffect(Level level, Player player) {
+        if (!(level instanceof ServerLevel server)) return;
+        Vec3 look = player.getLookAngle().normalize();
+        Vec3 center = player.getEyePosition().add(look.scale(1.15));
+        switch (power) {
+            case FORUM_PHANTOM_MASK -> {
+                server.sendParticles(ParticleTypes.SMOKE, center.x, center.y, center.z, 22, .35, .45, .35, .025);
+                sendRing(server, center, ParticleTypes.PORTAL, 1.0, 18);
+            }
+            case REALITY_CHECK -> sendRing(server, center, ParticleTypes.END_ROD, 1.45, 28);
+            case PLOT_ARMOR -> {
+                sendRing(server, player.position().add(0, .6, 0), ParticleTypes.TOTEM_OF_UNDYING, 1.0, 24);
+                sendRing(server, player.position().add(0, 1.5, 0), ParticleTypes.END_ROD, .8, 18);
+            }
+            case LAG_SPIKE -> {
+                server.sendParticles(ParticleTypes.CRIT, center.x, center.y, center.z, 30, .55, .45, .55, .12);
+                server.sendParticles(ParticleTypes.ELECTRIC_SPARK, center.x, center.y, center.z, 18, .4, .4, .4, .1);
+            }
+            case POCKET_DIMENSION, REALITY_RIFT -> {
+                sendRing(server, center, ParticleTypes.PORTAL, 1.25, 32);
+                sendRing(server, center.add(0, .25, 0), ParticleTypes.REVERSE_PORTAL, .8, 24);
+            }
+            case ADMIN_WAND -> {
+                server.sendParticles(ParticleTypes.CLOUD, center.x, center.y, center.z, 24, .2, .7, .2, .02);
+                sendRing(server, center, ParticleTypes.ENCHANT, .7, 16);
+            }
+            case CHAOS_DICE -> {
+                server.sendParticles(ParticleTypes.ENCHANT, center.x, center.y, center.z, 36, .6, .6, .6, .2);
+                sendRing(server, center, ParticleTypes.WITCH, 1.0, 20);
+            }
+            case MEME_BEACON -> {
+                server.sendParticles(ParticleTypes.HAPPY_VILLAGER, center.x, center.y, center.z, 28, .6, .5, .6, .08);
+                server.sendParticles(ParticleTypes.END_ROD, center.x, center.y, center.z, 12, .25, .7, .25, .04);
+            }
+            case GRAVITY_BOOTS -> {
+                sendRing(server, player.position().add(0, .15, 0), ParticleTypes.CLOUD, .85, 24);
+                server.sendParticles(ParticleTypes.POOF, player.getX(), player.getY() + .2, player.getZ(), 14, .25, .05, .25, .03);
+            }
+            case KI_BLAST -> {
+                server.sendParticles(ParticleTypes.END_ROD, center.x, center.y, center.z, 24, .2, .2, .2, .08);
+                sendRing(server, center, ParticleTypes.SOUL_FIRE_FLAME, .55, 18);
+            }
+            case KAMEHAMEHA -> {
+                server.sendParticles(ParticleTypes.END_ROD, center.x, center.y, center.z, 32, .35, .35, .35, .1);
+                sendRing(server, center, ParticleTypes.ELECTRIC_SPARK, .8, 24);
+            }
+            case X_RAY_VISION, MIND_READING -> {
+                sendRing(server, center, ParticleTypes.ENCHANT, 1.0, 24);
+                server.sendParticles(ParticleTypes.WITCH, center.x, center.y, center.z, 16, .4, .4, .4, .04);
+            }
+            case TIME_WARP -> {
+                sendRing(server, center, ParticleTypes.ELECTRIC_SPARK, 1.2, 32);
+                server.sendParticles(ParticleTypes.END_ROD, center.x, center.y, center.z, 18, .35, .35, .35, .03);
+            }
+            case PHASE_SHIFT -> {
+                sendRing(server, player.position().add(0, .8, 0), ParticleTypes.PORTAL, .8, 24);
+                server.sendParticles(ParticleTypes.REVERSE_PORTAL, player.getX(), player.getY() + .8, player.getZ(), 24, .3, .6, .3, .08);
+            }
+            case VOID_PULSE -> {
+                sendRing(server, center, ParticleTypes.REVERSE_PORTAL, 1.5, 36);
+                server.sendParticles(ParticleTypes.PORTAL, center.x, center.y, center.z, 28, .5, .5, .5, .12);
+            }
+            case BLACK_HOLE -> {
+                for (int i = 0; i < 40; i++) {
+                    double angle = i * Math.PI / 10.0;
+                    double radius = .25 + (i / 40.0) * 1.4;
+                    server.sendParticles(ParticleTypes.REVERSE_PORTAL,
+                        center.x + Math.cos(angle) * radius, center.y + Math.sin(angle * 1.4) * radius,
+                        center.z + Math.sin(angle) * radius, 1, 0, 0, 0, 0);
+                }
+            }
+            case LIGHTNING_SPEAR -> {
+                server.sendParticles(ParticleTypes.ELECTRIC_SPARK, center.x, center.y, center.z, 36, .4, .5, .4, .2);
+                sendRing(server, center, ParticleTypes.FLASH, .45, 8);
+            }
+        }
+    }
+
+    private void sendRing(ServerLevel server, Vec3 center, ParticleOptions particle, double radius, int count) {
+        for (int i = 0; i < count; i++) {
+            double angle = 2.0 * Math.PI * i / count;
+            server.sendParticles(particle, center.x + Math.cos(angle) * radius, center.y,
+                center.z + Math.sin(angle) * radius, 1, 0, 0, 0, 0);
+        }
     }
 
     private void fireKamehameha(Level level, Player player, double charge) {
