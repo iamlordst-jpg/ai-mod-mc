@@ -472,7 +472,17 @@ public class RealityItem extends Item {
         beamVisual.setPos(start.x, start.y, start.z);
         beamVisual.setDeltaMovement(direction);
         level.addFreshEntity(beamVisual);
-        // The custom renderer draws the full beam. Avoid the old vanilla particle trail/orbs.
+        // Layer a sparse electric/white-hot particle trail over the custom 3D beam.
+        if (level instanceof ServerLevel server) {
+            server.sendParticles(ParticleTypes.FLASH, start.x, start.y, start.z, 1, 0, 0, 0, 0);
+            int segments = Math.max(8, (int)(length / 0.8));
+            for (int i = 1; i <= segments; i++) {
+                Vec3 point = start.add(direction.scale(length * i / segments));
+                server.sendParticles(ParticleTypes.ELECTRIC_SPARK, point.x, point.y, point.z, 3, .10, .10, .10, .06);
+                if (i % 2 == 0) server.sendParticles(ParticleTypes.END_ROD, point.x, point.y, point.z, 1, .04, .04, .04, .01);
+            }
+        }
+        // The custom renderer draws the full beam; particles add a bright, crackling edge.
 
         AABB beamBox = new AABB(start, beamEnd).inflate(thickness);
         List<LivingEntity> targets = level.getEntitiesOfClass(LivingEntity.class, beamBox,
