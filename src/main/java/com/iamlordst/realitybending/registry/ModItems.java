@@ -35,6 +35,11 @@ public final class ModItems {
     public static final RegistryObject<Item> BLACK_HOLE = register("black_hole", RealityItem.Power.BLACK_HOLE, 180);
     public static final RegistryObject<Item> REALITY_RIFT = register("reality_rift", RealityItem.Power.REALITY_RIFT, 100);
     public static final RegistryObject<Item> LIGHTNING_SPEAR = register("lightning_spear", RealityItem.Power.LIGHTNING_SPEAR, 120);
+    // Inert satirical archive references: no combat abilities or spawn eggs.
+    public static final RegistryObject<Item> CASE_FILE_SALVADOR_RAMOS = ITEMS.register("case_file_salvador_ramos", () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> CASE_FILE_ADAM_LANZA = ITEMS.register("case_file_adam_lanza", () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> CASE_FILE_ARTHUR_ACHLEITNER = ITEMS.register("case_file_arthur_achleitner", () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> CASE_FILE_KOSTA_KECMANOVIC = ITEMS.register("case_file_kosta_kecmanovic", () -> new Item(new Item.Properties().stacksTo(1)));
 
     private static RegistryObject<Item> register(String name, RealityItem.Power power, int cooldown) {
         return ITEMS.register(name, () -> new RealityItem(power, cooldown, new Item.Properties().stacksTo(1)));
@@ -61,6 +66,10 @@ public final class ModItems {
         output.accept(BLACK_HOLE.get());
         output.accept(REALITY_RIFT.get());
         output.accept(LIGHTNING_SPEAR.get());
+        output.accept(CASE_FILE_SALVADOR_RAMOS.get());
+        output.accept(CASE_FILE_ADAM_LANZA.get());
+        output.accept(CASE_FILE_ARTHUR_ACHLEITNER.get());
+        output.accept(CASE_FILE_KOSTA_KECMANOVIC.get());
     }
 
     private ModItems() {}
