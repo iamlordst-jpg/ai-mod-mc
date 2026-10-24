@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "minecraft:spyglass" },
+    { "item": "minecraft:redstone" },
+    { "item": "minecraft:amethyst_shard" }
+  ],
+  "result": { "item": "realitybending:reality_check", "count": 1 }
+}
