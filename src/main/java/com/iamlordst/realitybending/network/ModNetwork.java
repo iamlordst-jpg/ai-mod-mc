@@ -17,5 +17,8 @@ public final class ModNetwork {
         CHANNEL.registerMessage(0, ToggleTelekinesisPacket.class,
             ToggleTelekinesisPacket::encode, ToggleTelekinesisPacket::decode,
             ToggleTelekinesisPacket::handle);
+        CHANNEL.registerMessage(1, PowerAbilityPacket.class,
+            PowerAbilityPacket::encode, PowerAbilityPacket::decode,
+            PowerAbilityPacket::handle);
     }
 }
