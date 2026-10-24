@@ -16,8 +16,8 @@ public final class TelekineticGlove extends Item {
         ItemStack stack = player.getItemInHand(hand);
         if (!level.isClientSide) {
             player.getPersistentData().putBoolean("realitybending_telekinesis_unlocked", true);
-            player.getPersistentData().putBoolean("realitybending_telekinesis_enabled", true);
-            player.displayClientMessage(Component.literal("TELEKINESIS UNLOCKED! Press G to toggle it. You no longer need to hold this item."), true);
+            player.getPersistentData().putBoolean("realitybending_telekinesis_enabled", false);
+            player.displayClientMessage(Component.literal("TELEKINESIS UNLOCKED! Press G to enable it. You no longer need to hold this item."), true);
             level.playSound(null, player.blockPosition(), net.minecraft.sounds.SoundEvents.BEACON_ACTIVATE,
                 net.minecraft.sounds.SoundSource.PLAYERS, 0.8F, 1.25F);
             if (!player.getAbilities().instabuild) stack.shrink(1);
