@@ -67,7 +67,7 @@ public final class PowerAbilityPacket {
                 }
                 case 3->{ // Spirit Bomb: charge-scaled, luminous sphere and radial impact.
                     Vec3 c=player.getEyePosition().add(look.scale(7.0));
-                    EnergyProjectile bomb=new EnergyProjectile(ModEntities.ENERGY_PROJECTILE.get(),level);bomb.configure(0,charge,player);bomb.setPos(c.x,c.y,c.z);bomb.setDeltaMovement(look.scale(.72+charge*.35));level.addFreshEntity(bomb);
+                    EnergyProjectile bomb=new EnergyProjectile(ModEntities.ENERGY_PROJECTILE.get(),level);bomb.configure(5,charge,player);bomb.setPos(c.x,c.y,c.z);bomb.setDeltaMovement(look.scale(.72+charge*.35));level.addFreshEntity(bomb);
                     level.sendParticles(ParticleTypes.FLASH,c.x,c.y,c.z,1,0,0,0,0);level.sendParticles(ParticleTypes.END_ROD,c.x,c.y,c.z,100,.8,.8,.8,.15);level.sendParticles(ParticleTypes.HAPPY_VILLAGER,c.x,c.y,c.z,65,1,1,1,.08);
                     level.playSound(null,player.blockPosition(),ModSounds.KAMEHAMEHA_RELEASE.get(),net.minecraft.sounds.SoundSource.PLAYERS,2.0F,.55F);
                 }
