@@ -53,7 +53,7 @@ public final class EnergyProjectile extends Entity {
                         if(pos.distSqr(origin)>16||level().getBlockEntity(pos)!=null)continue;
                         BlockState state=level().getBlockState(pos);
                         if(state.isAir()||state.getDestroySpeed(level(),pos)<0||state.getDestroySpeed(level(),pos)>4)continue;
-                        if(level().random.nextFloat()<.16F){s.sendParticles(ParticleTypes.BLOCK,state.getParticleIcon(),pos.getX()+.5,pos.getY()+.5,pos.getZ()+.5,4,.2,.2,.2,.08);level().destroyBlock(pos,false);}
+                        if(level().random.nextFloat()<.16F){s.sendParticles(new net.minecraft.core.particles.BlockParticleOption(ParticleTypes.BLOCK,state),pos.getX()+.5,pos.getY()+.5,pos.getZ()+.5,4,.2,.2,.2,.08);level().destroyBlock(pos,false);}
                     }
                 }
             }
