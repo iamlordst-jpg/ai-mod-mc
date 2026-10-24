@@ -11,7 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.SmallFireball;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUseAnimation;
+import net.minecraft.world.item.UseAnim;
 import com.iamlordst.realitybending.registry.ModSounds;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -70,9 +70,9 @@ public final class RealityItem extends Item {
     }
 
     @Override
-    public ItemUseAnimation getUseAnimation(ItemStack stack) {
-        return power == Power.KAMEHAMEHA ? ItemUseAnimation.SPYGLASS
-            : power == Power.KI_BLAST ? ItemUseAnimation.BOW : ItemUseAnimation.NONE;
+    public UseAnim getUseAnimation(ItemStack stack) {
+        return power == Power.KAMEHAMEHA ? UseAnim.SPYGLASS
+            : power == Power.KI_BLAST ? UseAnim.BOW : UseAnim.NONE;
     }
 
     @Override
