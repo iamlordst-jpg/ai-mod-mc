@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "minecraft:repeater" },
+    { "item": "minecraft:slime_ball" },
+    { "item": "minecraft:redstone" }
+  ],
+  "result": { "item": "realitybending:lag_spike", "count": 1 }
+}
