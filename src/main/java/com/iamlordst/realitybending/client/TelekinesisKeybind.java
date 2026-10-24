@@ -32,7 +32,7 @@ public final class TelekinesisKeybind {
         if (minecraft.player == null || minecraft.level == null) return;
         while (TOGGLE.consumeClick()) {
             locallyEnabled = !locallyEnabled;
-            ModNetwork.CHANNEL.sendToServer(new ToggleTelekinesisPacket());
+            ModNetwork.CHANNEL.sendToServer(new ToggleTelekinesisPacket(locallyEnabled));
         }
     }
 }
