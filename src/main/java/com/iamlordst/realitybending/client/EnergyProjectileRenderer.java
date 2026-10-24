@@ -28,6 +28,16 @@ public final class EnergyProjectileRenderer extends EntityRenderer<EnergyProject
             drawTube(out,pose,spear?.48F:.98F,spear?2.4F:e.beamLength(),spear?1F:.12F,spear?.88F:.45F,spear?.18F:1F,.92F);
             drawTube(out,pose,spear?.26F:.64F,spear?2.4F:e.beamLength(),1F,.96F,spear?.65F:1F,1F);
             drawTube(out,pose,spear?.10F:.3F,spear?2.4F:e.beamLength(),1F,1F,1F,1F);
+        } else if(e.visualType()==5) {
+            float t=e.tickCount+partial,pulse=1F+Mth.sin(t*.22F)*.1F,r=(.72F+e.charge()*.62F)*pulse;
+            drawSphere(out,pose,r,.12F,.45F,1F,1F);
+            drawSphere(out,pose,r*.76F,.28F,.78F,1F,1F);
+            drawSphere(out,pose,r*.48F,.72F,.94F,1F,1F);
+            drawSphere(out,pose,r*.25F,1F,1F,1F,1F);
+            stack.mulPose(Axis.YP.rotation(t*.14F));pose=stack.last();
+            drawRing(out,pose,r*1.35F,.07F,.15F,.55F,1F,1F);
+            stack.mulPose(Axis.XP.rotation(.72F));pose=stack.last();
+            drawRing(out,pose,r*1.15F,.045F,.7F,.9F,1F,.95F);
         } else if(e.visualType()==3) {
             float t=e.tickCount+partial,pulse=1F+Mth.sin(t*.24F)*.1F;
             drawSphere(out,pose,.78F*pulse,.004F,.001F,.015F,1F);
