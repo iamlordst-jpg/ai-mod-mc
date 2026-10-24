@@ -1,4 +1,6 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": { "layer0": "minecraft:item/iron_boots" }
+  "parent": "builtin/entity",
+  "textures": {
+    "particle": "minecraft:item/ender_pearl"
+  }
 }
