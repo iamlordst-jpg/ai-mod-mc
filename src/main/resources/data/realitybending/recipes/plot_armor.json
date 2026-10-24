@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "minecraft:diamond_chestplate" },
+    { "item": "minecraft:totem_of_undying" }
+  ],
+  "result": { "item": "realitybending:plot_armor", "count": 1 }
+}
