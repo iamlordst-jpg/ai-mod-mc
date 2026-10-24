@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    { "item": "minecraft:leather_helmet" },
+    { "item": "minecraft:written_book" },
     { "item": "minecraft:ink_sac" },
-    { "item": "minecraft:phantom_membrane" }
+    { "item": "minecraft:rotten_flesh" }
   ],
   "result": { "item": "realitybending:forum_phantom_mask", "count": 1 }
 }
