@@ -44,8 +44,12 @@
   "subtitles.realitybending.lag_cast": "Lag spike activates",
   "subtitles.realitybending.reveal_cast": "Revelation pulse",
   "subtitles.realitybending.meme_beacon_cast": "Meme beacon activates",
-  "key.categories.realitybending": "Reality Bending",
+  "key.categories.realitybending": "Reality Bending Powers",
   "key.realitybending.toggle_telekinesis": "Toggle Telekinesis",
-  "key.realitybending.ki_blast_ability": "Charge / Fire Ki Blast",
-  "key.realitybending.kamehameha_ability": "Charge / Fire Kamehameha"
+  "key.realitybending.ki_blast_ability": "Hold / Release: Ki Blast",
+  "key.realitybending.kamehameha_ability": "Hold / Release: Kamehameha",
+  "key.realitybending.black_hole_ability": "Hold / Release: Black Hole",
+  "key.realitybending.gravity_crush_ability": "Hold / Release: Gravity Crush",
+  "key.realitybending.lightning_spear_ability": "Hold / Release: Lightning Spear",
+  "key.realitybending.void_pulse_ability": "Hold / Release: Void Pulse"
 }
