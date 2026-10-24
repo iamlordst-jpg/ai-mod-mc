@@ -11,6 +11,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.SmallFireball;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUseAnimation;
+import com.iamlordst.realitybending.registry.ModSounds;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.level.Level;
@@ -39,15 +41,82 @@ public final class RealityItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (level.isClientSide) return InteractionResultHolder.sidedSuccess(stack, true);
         if (player.getCooldowns().isOnCooldown(this)) return InteractionResultHolder.fail(stack);
+
+        // Ki Blast and Kamehameha are channelled: hold to charge, release to fire.
+        if (power == Power.KI_BLAST || power == Power.KAMEHAMEHA) {
+            player.startUsingItem(hand);
+            if (!level.isClientSide) {
+                level.playSound(null, player.blockPosition(),
+                    power == Power.KI_BLAST ? ModSounds.KI_CHARGE.get() : ModSounds.KAMEHAMEHA_CHARGE.get(),
+                    net.minecraft.sounds.SoundSource.PLAYERS, 1.0F, 1.0F);
+            }
+            return InteractionResultHolder.consume(stack);
+        }
+
+        if (level.isClientSide) return InteractionResultHolder.sidedSuccess(stack, true);
         if (activate(level, player)) {
             player.getCooldowns().addCooldown(this, cooldown);
-            level.playSound(null, player.blockPosition(), net.minecraft.sounds.SoundEvents.ENDERMAN_TELEPORT,
-                net.minecraft.sounds.SoundSource.PLAYERS, 0.65F, 0.9F + level.random.nextFloat() * 0.3F);
+            playPowerSound(level, player);
+            spawnCastEffect(level, player);
             return InteractionResultHolder.consume(stack);
         }
         return InteractionResultHolder.fail(stack);
+    }
+
+    @Override
+    public int getUseDuration(ItemStack stack) {
+        return power == Power.KI_BLAST || power == Power.KAMEHAMEHA ? 72000 : 0;
+    }
+
+    @Override
+    public ItemUseAnimation getUseAnimation(ItemStack stack) {
+        return power == Power.KAMEHAMEHA ? ItemUseAnimation.SPYGLASS
+            : power == Power.KI_BLAST ? ItemUseAnimation.BOW : ItemUseAnimation.NONE;
+    }
+
+    @Override
+    public void onUseTick(Level level, net.minecraft.world.entity.LivingEntity entity, ItemStack stack, int remainingUseDuration) {
+        if (!(entity instanceof Player player) || !(level instanceof ServerLevel server) || remainingUseDuration % 2 != 0) return;
+        int elapsed = getUseDuration(stack) - remainingUseDuration;
+        Vec3 look = player.getLookAngle().normalize();
+        Vec3 side = look.cross(new Vec3(0, 1, 0));
+        if (side.lengthSqr() < 0.01) side = new Vec3(1, 0, 0);
+        side = side.normalize();
+        Vec3 up = look.cross(side).normalize();
+        Vec3 center = player.getEyePosition().add(look.scale(0.85));
+        double radius = 0.25 + Math.min(0.65, elapsed / 35.0);
+        for (int i = 0; i < 8; i++) {
+            double angle = elapsed * 0.24 + i * Math.PI / 4.0;
+            Vec3 point = center.add(side.scale(Math.cos(angle) * radius)).add(up.scale(Math.sin(angle) * radius));
+            server.sendParticles(power == Power.KI_BLAST ? ParticleTypes.END_ROD : ParticleTypes.ELECTRIC_SPARK,
+                point.x, point.y, point.z, 1, .015, .015, .015, .01);
+        }
+        server.sendParticles(power == Power.KI_BLAST ? ParticleTypes.SOUL_FIRE_FLAME : ParticleTypes.WAX_ON,
+            center.x, center.y, center.z, 2, .12, .12, .12, .015);
+    }
+
+    @Override
+    public void releaseUsing(ItemStack stack, Level level, net.minecraft.world.entity.LivingEntity entity, int timeLeft) {
+        if (level.isClientSide || !(entity instanceof Player player)) return;
+        int chargeTicks = getUseDuration(stack) - timeLeft;
+        if (chargeTicks < 5 || player.getCooldowns().isOnCooldown(this)) return;
+        player.getCooldowns().addCooldown(this, cooldown);
+        if (power == Power.KI_BLAST) {
+            Vec3 look = player.getLookAngle().normalize();
+            Vec3 origin = player.getEyePosition().add(look.scale(0.9));
+            SmallFireball blast = new SmallFireball(level, player, look.x, look.y, look.z);
+            blast.setPos(origin.x, origin.y, origin.z);
+            level.addFreshEntity(blast);
+            if (level instanceof ServerLevel server) {
+                server.sendParticles(ParticleTypes.END_ROD, origin.x, origin.y, origin.z, 18, .16, .16, .16, .08);
+                server.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, origin.x, origin.y, origin.z, 12, .12, .12, .12, .04);
+            }
+            level.playSound(null, player.blockPosition(), ModSounds.KI_RELEASE.get(),
+                net.minecraft.sounds.SoundSource.PLAYERS, 1.25F, 1.0F);
+        } else if (power == Power.KAMEHAMEHA) {
+            fireKamehameha(level, player, Math.min(1.0, chargeTicks / 50.0));
+        }
     }
 
     private boolean activate(Level level, Player player) {
@@ -291,6 +360,68 @@ public final class RealityItem extends Item {
             }
         }
         return false;
+    }
+
+    private void playPowerSound(Level level, Player player) {
+        net.minecraft.sounds.SoundEvent sound = ModSounds.POWER_CAST.get();
+        float pitch = 0.9F + level.random.nextFloat() * 0.25F;
+        if (power == Power.BLACK_HOLE || power == Power.VOID_PULSE) sound = ModSounds.VOID_CAST.get();
+        else if (power == Power.REALITY_RIFT || power == Power.POCKET_DIMENSION) sound = ModSounds.RIFT_CAST.get();
+        else if (power == Power.LIGHTNING_SPEAR) sound = ModSounds.LIGHTNING_CAST.get();
+        level.playSound(null, player.blockPosition(), sound, net.minecraft.sounds.SoundSource.PLAYERS, 1.0F, pitch);
+    }
+
+    private void spawnCastEffect(Level level, Player player) {
+        if (!(level instanceof ServerLevel server)) return;
+        Vec3 center = player.getEyePosition().add(player.getLookAngle().normalize().scale(1.0));
+        net.minecraft.core.particles.ParticleOptions particle = switch (power) {
+            case BLACK_HOLE, VOID_PULSE -> ParticleTypes.REVERSE_PORTAL;
+            case REALITY_RIFT, POCKET_DIMENSION, PHASE_SHIFT -> ParticleTypes.PORTAL;
+            case LIGHTNING_SPEAR, TIME_WARP -> ParticleTypes.ELECTRIC_SPARK;
+            case PLOT_ARMOR -> ParticleTypes.TOTEM_OF_UNDYING;
+            case GRAVITY_BOOTS, ADMIN_WAND -> ParticleTypes.CLOUD;
+            case MIND_READING, REALITY_CHECK, X_RAY_VISION -> ParticleTypes.ENCHANT;
+            case LAG_SPIKE -> ParticleTypes.CRIT;
+            default -> ParticleTypes.END_ROD;
+        };
+        server.sendParticles(particle, center.x, center.y, center.z, 28, .45, .55, .45, .12);
+        server.sendParticles(ParticleTypes.WITCH, center.x, center.y, center.z, 10, .35, .4, .35, .03);
+    }
+
+    private void fireKamehameha(Level level, Player player, double charge) {
+        Vec3 start = player.getEyePosition().add(player.getLookAngle().normalize().scale(1.0));
+        Vec3 direction = player.getLookAngle().normalize();
+        double maxLength = 32.0 + charge * 12.0;
+        Vec3 end = start.add(direction.scale(maxLength));
+        BlockHitResult blockHit = level.clip(new net.minecraft.world.level.ClipContext(start, end,
+            net.minecraft.world.level.ClipContext.Block.COLLIDER,
+            net.minecraft.world.level.ClipContext.Fluid.NONE, player));
+        Vec3 beamEnd = blockHit.getType() == HitResult.Type.BLOCK ? blockHit.getLocation() : end;
+        double length = start.distanceTo(beamEnd);
+        double thickness = 0.85 + charge * 0.7;
+        if (level instanceof ServerLevel server) {
+            for (double d = 0; d < length; d += 0.22) {
+                Vec3 point = start.add(direction.scale(d));
+                double pulse = 0.07 + 0.05 * Math.sin(d * 1.7 + player.tickCount);
+                server.sendParticles(ParticleTypes.END_ROD, point.x, point.y, point.z, 2, thickness * .16, thickness * .16, thickness * .16, .01);
+                server.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, point.x, point.y, point.z, 2, pulse, pulse, pulse, .015);
+                if (((int)(d * 10)) % 4 == 0) server.sendParticles(ParticleTypes.ELECTRIC_SPARK,
+                    point.x, point.y, point.z, 1, thickness * .1, thickness * .1, thickness * .1, .02);
+            }
+            server.sendParticles(ParticleTypes.FLASH, beamEnd.x, beamEnd.y, beamEnd.z, 1, 0, 0, 0, 0);
+            server.sendParticles(ParticleTypes.EXPLOSION, beamEnd.x, beamEnd.y, beamEnd.z, 8 + (int)(charge * 12), .4, .4, .4, .08);
+            server.sendParticles(ParticleTypes.END_ROD, beamEnd.x, beamEnd.y, beamEnd.z, 30, .7, .7, .7, .14);
+        }
+        AABB beamBox = new AABB(start, beamEnd).inflate(thickness);
+        List<LivingEntity> targets = level.getEntitiesOfClass(LivingEntity.class, beamBox,
+            e -> e != player && e.isAlive() && beamDistanceSquared(e, start, direction, length) < thickness * thickness * 1.8);
+        for (LivingEntity target : targets) {
+            target.hurt(level.damageSources().magic(), (float)(14.0 + charge * 14.0));
+            target.setDeltaMovement(target.getDeltaMovement().add(direction.scale(1.3 + charge * 1.7)));
+            target.hurtMarked = true;
+        }
+        level.playSound(null, player.blockPosition(), ModSounds.KAMEHAMEHA_RELEASE.get(),
+            net.minecraft.sounds.SoundSource.PLAYERS, 1.5F, 1.0F - (float)charge * .2F);
     }
 
     private static double beamDistanceSquared(LivingEntity entity, Vec3 start, Vec3 direction, double maxLength) {
