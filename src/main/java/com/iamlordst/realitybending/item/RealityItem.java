@@ -204,10 +204,9 @@ public final class RealityItem extends Item {
             }
             case PHASE_SHIFT -> {
                 player.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 100, 0));
-                player.addEffect(new MobEffectInstance(MobEffects.SPEED, 100, 3));
+                player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 100, 3));
                 player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 100, 0));
-                player.noPhysics = true;
-                player.displayClientMessage(Component.literal("PHASE SHIFT! You can pass through obstacles briefly."), true);
+                player.displayClientMessage(Component.literal("PHASE SHIFT! You are briefly cloaked and move at supernatural speed."), true);
                 return true;
             }
             case VOID_PULSE -> {
