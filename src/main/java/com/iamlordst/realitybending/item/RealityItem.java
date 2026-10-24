@@ -14,6 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -138,7 +139,6 @@ public final class RealityItem extends Item {
                 blast.setPos(origin.x, origin.y, origin.z);
                 blast.setSecondsOnFire(0);
                 level.addFreshEntity(blast);
-                player.swing(hand, true);
                 return true;
             }
             case KAMEHAMEHA -> {
@@ -152,8 +152,8 @@ public final class RealityItem extends Item {
                 double length = start.distanceTo(beamEnd);
                 for (double d = 0; d < length; d += 0.35) {
                     Vec3 point = start.add(direction.scale(d));
-                    level.sendParticles(ParticleTypes.END_ROD, point.x, point.y, point.z, 2, .08, .08, .08, 0.01);
-                    level.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, point.x, point.y, point.z, 1, .04, .04, .04, 0.01);
+                    if (level instanceof ServerLevel serverLevel) serverLevel.sendParticles(ParticleTypes.END_ROD, point.x, point.y, point.z, 2, .08, .08, .08, 0.01);
+                    if (level instanceof ServerLevel serverLevel) serverLevel.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, point.x, point.y, point.z, 1, .04, .04, .04, 0.01);
                 }
                 AABB beamBox = new AABB(start, beamEnd).inflate(1.2);
                 List<LivingEntity> targets = level.getEntitiesOfClass(LivingEntity.class, beamBox,
@@ -215,7 +215,7 @@ public final class RealityItem extends Item {
                     Vec3 away = target.position().subtract(player.position()).normalize();
                     target.setDeltaMovement(away.scale(2.8).add(0, 1.2, 0));
                     target.hurtMarked = true;
-                    level.sendParticles(ParticleTypes.PORTAL, target.getX(), target.getY() + target.getBbHeight() * .5,
+                    if (level instanceof ServerLevel serverLevel) serverLevel.sendParticles(ParticleTypes.PORTAL, target.getX(), target.getY() + target.getBbHeight() * .5,
                         target.getZ(), 24, .5, .5, .5, .35);
                 }
                 player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 80, 2));
