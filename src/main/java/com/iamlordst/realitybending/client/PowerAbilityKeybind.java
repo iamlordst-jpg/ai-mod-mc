@@ -16,10 +16,10 @@ public final class PowerAbilityKeybind {
     public static final KeyMapping KI_BLAST = key("key.realitybending.ki_blast_ability", GLFW.GLFW_KEY_V);
     public static final KeyMapping KAMEHAMEHA = key("key.realitybending.kamehameha_ability", GLFW.GLFW_KEY_B);
     public static final KeyMapping BLACK_HOLE = key("key.realitybending.black_hole_ability", GLFW.GLFW_KEY_N);
-    public static final KeyMapping GRAVITY_CRUSH = key("key.realitybending.gravity_crush_ability", GLFW.GLFW_KEY_H);
-    public static final KeyMapping LIGHTNING_SPEAR = key("key.realitybending.lightning_spear_ability", GLFW.GLFW_KEY_J);
-    public static final KeyMapping VOID_PULSE = key("key.realitybending.void_pulse_ability", GLFW.GLFW_KEY_K);
-    private static final KeyMapping[] KEYS = {KI_BLAST,KAMEHAMEHA,BLACK_HOLE,GRAVITY_CRUSH,LIGHTNING_SPEAR,VOID_PULSE};
+    public static final KeyMapping SPIRIT_BOMB = key("key.realitybending.spirit_bomb_ability", GLFW.GLFW_KEY_H);
+    public static final KeyMapping INSTANT_TRANSMISSION = key("key.realitybending.instant_transmission_ability", GLFW.GLFW_KEY_J);
+    public static final KeyMapping TIME_STOP = key("key.realitybending.time_stop_ability", GLFW.GLFW_KEY_K);
+    private static final KeyMapping[] KEYS = {KI_BLAST,KAMEHAMEHA,BLACK_HOLE,SPIRIT_BOMB,INSTANT_TRANSMISSION,TIME_STOP};
     private static final boolean[] WAS_DOWN = new boolean[KEYS.length];
     private static final boolean[] CHARGING = new boolean[KEYS.length];
     private PowerAbilityKeybind() {}
