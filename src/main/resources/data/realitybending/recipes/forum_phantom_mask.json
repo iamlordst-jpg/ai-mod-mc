@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "minecraft:leather_helmet" },
+    { "item": "minecraft:ink_sac" },
+    { "item": "minecraft:phantom_membrane" }
+  ],
+  "result": { "item": "realitybending:forum_phantom_mask", "count": 1 }
+}
