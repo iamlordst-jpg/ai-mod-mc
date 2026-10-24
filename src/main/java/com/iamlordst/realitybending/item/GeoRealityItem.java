@@ -12,9 +12,10 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.renderer.GeoItemRenderer;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import java.util.Locale;
 import java.util.function.Consumer;
 
-/** Power item rendered as a custom, continuously animated reality orb. */
+/** Each Reality Bending power has its own animated geometry and idle motion. */
 public final class GeoRealityItem extends RealityItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
@@ -23,10 +24,19 @@ public final class GeoRealityItem extends RealityItem implements GeoItem {
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }
 
+    public Power getPower() {
+        return powerType();
+    }
+
+    private Power powerType() {
+        return getPowerType();
+    }
+
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "orb_idle", 0,
-            state -> state.setAndContinue(RawAnimation.begin().thenLoop("animation.reality_orb.idle"))));
+        String animation = "animation.reality_orb." + getPower().name().toLowerCase(Locale.ROOT) + ".idle";
+        controllers.add(new AnimationController<>(this, "power_idle", 0,
+            state -> state.setAndContinue(RawAnimation.begin().thenLoop(animation))));
     }
 
     @Override
