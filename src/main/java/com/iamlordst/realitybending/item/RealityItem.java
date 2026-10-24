@@ -488,12 +488,27 @@ public class RealityItem extends Item {
         List<LivingEntity> targets = level.getEntitiesOfClass(LivingEntity.class, beamBox,
             e -> e != player && e.isAlive() && beamDistanceSquared(e, start, direction, length) < thickness * thickness * 1.8);
         for (LivingEntity target : targets) {
-            target.hurt(level.damageSources().magic(), (float)(14.0 + charge * 14.0));
-            target.setDeltaMovement(target.getDeltaMovement().add(direction.scale(1.3 + charge * 1.7)));
+            target.hurt(level.damageSources().magic(), (float)(18.0 + charge * 20.0));
+            target.setDeltaMovement(target.getDeltaMovement().add(direction.scale(1.6 + charge * 2.2)));
             target.hurtMarked = true;
         }
+        // The beam carves through ordinary terrain along its path. Protected blocks and block entities stay intact.
+        if (level instanceof ServerLevel server && level.getGameRules().getBoolean(net.minecraft.world.level.GameRules.RULE_MOBGRIEFING)) {
+            int steps = Math.max(1, (int)(length * 2.0));
+            for (int i = 0; i <= steps; i++) {
+                Vec3 point = start.add(direction.scale(length * i / steps));
+                BlockPos center = BlockPos.containing(point);
+                int radius = charge > .65 ? 1 : 0;
+                for (BlockPos pos : BlockPos.betweenClosed(center.offset(-radius,-radius,-radius), center.offset(radius,radius,radius))) {
+                    if (level.getBlockEntity(pos) != null) continue;
+                    var state = level.getBlockState(pos);
+                    float hardness = state.getDestroySpeed(level, pos);
+                    if (!state.isAir() && hardness >= 0 && hardness <= 5) level.destroyBlock(pos, true);
+                }
+            }
+        }
         level.playSound(null, player.blockPosition(), ModSounds.KAMEHAMEHA_RELEASE.get(),
-            net.minecraft.sounds.SoundSource.PLAYERS, 1.5F, 1.0F - (float)charge * .2F);
+            net.minecraft.sounds.SoundSource.PLAYERS, 2.4F, .72F - (float)charge * .15F);
     }
 
     private static double beamDistanceSquared(LivingEntity entity, Vec3 start, Vec3 direction, double maxLength) {
