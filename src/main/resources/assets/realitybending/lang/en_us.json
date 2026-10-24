@@ -16,5 +16,12 @@
   "item.realitybending.mind_reading": "Telepathy",
   "item.realitybending.time_warp": "Time Warp",
   "item.realitybending.phase_shift": "Phase Shift",
-  "item.realitybending.void_pulse": "Void Pulse"
+  "item.realitybending.void_pulse": "Void Pulse",
+  "item.realitybending.black_hole": "Black Hole",
+  "item.realitybending.reality_rift": "Reality Rift",
+  "item.realitybending.lightning_spear": "Lightning Spear",
+  "item.realitybending.case_file_salvador_ramos": "Case File: Salvador Ramos (Satire)",
+  "item.realitybending.case_file_adam_lanza": "Case File: Adam Lanza (Satire)",
+  "item.realitybending.case_file_arthur_achleitner": "Case File: Arthur Achleitner (Satire)",
+  "item.realitybending.case_file_kosta_kecmanovic": "Case File: Kosta Kecmanović (Satire)"
 }
