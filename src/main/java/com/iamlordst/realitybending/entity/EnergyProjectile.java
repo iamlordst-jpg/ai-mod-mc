@@ -68,8 +68,8 @@ public final class EnergyProjectile extends Entity {
         Vec3 motion=getDeltaMovement();Vec3 next=position().add(motion);setPos(next.x,next.y,next.z);
         if(tickCount>80||!level().isLoaded(blockPosition())){discard();return;}
         if(level().isClientSide)return;
-        if((visualType()==0||visualType()==4)&&level() instanceof ServerLevel s){
-            s.sendParticles(visualType()==4?ParticleTypes.ELECTRIC_SPARK:ParticleTypes.END_ROD,getX(),getY(),getZ(),visualType()==4?12:12,.14,.14,.14,.12);
+        if((visualType()==0||visualType()==4||visualType()==5)&&level() instanceof ServerLevel s){
+            s.sendParticles((visualType()==4?ParticleTypes.ELECTRIC_SPARK:visualType()==5?ParticleTypes.HAPPY_VILLAGER:ParticleTypes.END_ROD),getX(),getY(),getZ(),visualType()==4?12:visualType()==5?18:12,.14,.14,.14,.12);
             s.sendParticles(ParticleTypes.GLOW,getX(),getY(),getZ(),8,.1,.1,.1,.04);
             s.sendParticles(ParticleTypes.ELECTRIC_SPARK,getX(),getY(),getZ(),4,.1,.1,.1,.18);
         }
