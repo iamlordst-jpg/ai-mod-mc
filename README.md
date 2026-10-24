@@ -10,8 +10,8 @@ All registered mod items are in their own **Reality Bending Powers** Creative ta
 
 - **Telekinesis Unlock** — use once, then press **G** to toggle. Range increased to 40 blocks; a grabbed target stays locked while you move the camera, follows a stronger spring-like hold point, and ignores collisions while held so it won't push away from you. Collision and gravity are restored when released or when the target is lost. Enchantment, reverse-portal and end-rod particles create a telekinetic aura.
 - **Elliot Rodger's Supreme Gentleman Fedora (Parody)** — unmistakable dark satire of the “supreme gentleman” persona; grants invisibility, speed and slow falling. The joke is aimed at the persona, not admiration.
-- **Ki Blast** — launch a fast, fiery projectile.
-- **KAMEHAMEHA** — fire a long-range energy beam with particles, damage and knockback.
+- **Ki Blast** — hold to charge a spiralling energy orb, then release to launch it with layered sound cues and a bright particle burst.
+- **KAMEHAMEHA** — hold to build energy with a growing orbiting particle ring and charge sound; release to unleash a thicker, longer, charge-scaled beam with a layered blast sound and impact flare.
 - **X-Ray Pulse** — grants night vision and highlights nearby living entities. It does not render hidden ore blocks through solid walls.
 - **Telepathy** — reports nearby living entities and their current health.
 - **Time Warp** — heavily slows nearby entities while boosting your movement.
@@ -29,7 +29,7 @@ All registered mod items are in their own **Reality Bending Powers** Creative ta
 - **Meme Beacon** — gives you speed and outlines nearby living entities.
 - **Gravity Boots** — jump boost, slow falling and speed.
 
-**Dark-satire archive references:** the Elliot Rodger parody relic plus inert case-file items for Salvador Ramos, Adam Lanza, Arthur Achleitner and Kosta Kecmanović. These are non-combat references only: no shooter spawn eggs, buffs or playable perpetrator characters. The supernatural effects currently use Minecraft particles and sounds; there are not yet custom animated player models.
+**Dark-satire archive references:** the Elliot Rodger parody relic plus inert case-file items for Salvador Ramos, Adam Lanza, Arthur Achleitner and Kosta Kecmanović. These are non-combat references only: no shooter spawn eggs, buffs or playable perpetrator characters. Powers now have custom animation sequences built from code-driven particles, item-use poses, and custom sound events layered from Minecraft audio assets. This is standalone Forge code and does not depend on Epic Fight. The audio is a custom mix of existing Minecraft sound assets, not newly recorded WAV files.
 
 ## Build and install
 
