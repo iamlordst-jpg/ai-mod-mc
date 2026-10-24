@@ -43,5 +43,9 @@
   "subtitles.realitybending.phase_cast": "Phase shift activates",
   "subtitles.realitybending.lag_cast": "Lag spike activates",
   "subtitles.realitybending.reveal_cast": "Revelation pulse",
-  "subtitles.realitybending.meme_beacon_cast": "Meme beacon activates"
+  "subtitles.realitybending.meme_beacon_cast": "Meme beacon activates",
+  "key.categories.realitybending": "Reality Bending",
+  "key.realitybending.toggle_telekinesis": "Toggle Telekinesis",
+  "key.realitybending.ki_blast_ability": "Charge / Fire Ki Blast",
+  "key.realitybending.kamehameha_ability": "Charge / Fire Kamehameha"
 }
