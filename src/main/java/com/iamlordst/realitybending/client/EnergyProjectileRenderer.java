@@ -15,12 +15,6 @@ public final class EnergyProjectileRenderer extends EntityRenderer<EnergyProject
     public EnergyProjectileRenderer(EntityRendererProvider.Context context) { super(context); shadowRadius = 0.0F; }
 
     @Override public void render(EnergyProjectile e, float yaw, float partial, PoseStack stack, MultiBufferSource buffers, int light) {
-        // Only the Kamehameha beam (type 1) is rendered. Hide the old fireball and
-        // charging spheres while leaving their entity logic harmlessly invisible.
-        if (e.visualType() != 1) {
-            super.render(e, yaw, partial, stack, buffers, light);
-            return;
-        }
         stack.pushPose();
         stack.translate(0, e.getBbHeight() * 0.5F, 0);
         VertexConsumer out = buffers.getBuffer(RenderType.entityTranslucentEmissive(TEXTURE));
