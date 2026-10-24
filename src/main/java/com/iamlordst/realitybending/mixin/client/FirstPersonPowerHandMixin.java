@@ -97,6 +97,6 @@ public abstract class FirstPersonPowerHandMixin {
             CallbackInfo ci) {
         // This method only runs when an arm is being rendered. A balanced pose
         // stack keeps vanilla's item transform and later render calls untouched.
-        poseStack.popPose();
+        if (Minecraft.getInstance().player != null) poseStack.popPose();
     }
 }
