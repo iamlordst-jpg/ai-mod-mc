@@ -4,11 +4,11 @@ Minecraft Java Edition 1.20.1 supernatural/anime powers mod. Requires Java 17 an
 
 ## Dedicated inventory tab
 
-All 17 mod items are in their own **Reality Bending Powers** Creative tab instead of being mixed into Ingredients. Every new item has an item model and a crafting recipe.
+All registered mod items are in their own **Reality Bending Powers** Creative tab instead of being mixed into Ingredients. Every new item has an item model and a crafting recipe.
 
 ## Powers
 
-- **Telekinesis Unlock** — use once, then press **G** to toggle. Range increased to 32 blocks; target pull is much stronger and targets temporarily ignore collision while held so they do not shove the player around. Aim at one living target to control it.
+- **Telekinesis Unlock** — use once, then press **G** to toggle. Range increased to 40 blocks; a grabbed target stays locked while you move the camera, follows a stronger spring-like hold point, and ignores collisions while held so it won't push away from you. Collision and gravity are restored when released or when the target is lost. Enchantment, reverse-portal and end-rod particles create a telekinetic aura.
 - **Elliot Rodger's Supreme Gentleman Fedora (Parody)** — unmistakable dark satire of the “supreme gentleman” persona; grants invisibility, speed and slow falling. The joke is aimed at the persona, not admiration.
 - **Ki Blast** — launch a fast, fiery projectile.
 - **KAMEHAMEHA** — fire a long-range energy beam with particles, damage and knockback.
@@ -17,6 +17,9 @@ All 17 mod items are in their own **Reality Bending Powers** Creative tab instea
 - **Time Warp** — heavily slows nearby entities while boosting your movement.
 - **Phase Shift** — briefly cloaks you and grants supernatural speed and slow falling.
 - **Void Pulse** — blasts nearby entities away with a portal-energy burst.
+- **Black Hole** — creates a swirling portal vortex that pulls nearby entities inward.
+- **Reality Rift** — teleports you behind a nearby target with a paired portal burst.
+- **Lightning Spear** — calls down a lightning strike along your aim direction.
 - **Reality Check** — outlines nearby living entities and slows them briefly.
 - **Plot Armor** — strong resistance, absorption and regeneration.
 - **Lag Spike** — slows nearby entities and their mining.
@@ -26,7 +29,7 @@ All 17 mod items are in their own **Reality Bending Powers** Creative tab instea
 - **Meme Beacon** — gives you speed and outlines nearby living entities.
 - **Gravity Boots** — jump boost, slow falling and speed.
 
-The shooter-name spawn eggs are intentionally not included; the parody relic makes the ER reference direct without turning real perpetrators into playable characters.
+**Dark-satire archive references:** the Elliot Rodger parody relic plus inert case-file items for Salvador Ramos, Adam Lanza, Arthur Achleitner and Kosta Kecmanović. These are non-combat references only: no shooter spawn eggs, buffs or playable perpetrator characters. The supernatural effects currently use Minecraft particles and sounds; there are not yet custom animated player models.
 
 ## Build and install
 
