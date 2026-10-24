@@ -23,10 +23,6 @@ public final class ToggleTelekinesisPacket {
         context.enqueueWork(() -> {
             ServerPlayer player = context.getSender();
             if (player == null) return;
-            if (!player.getPersistentData().getBoolean("realitybending_telekinesis_unlocked")) {
-                player.displayClientMessage(Component.literal("You haven't unlocked telekinesis yet. Use the Telekinesis Unlock item first."), true);
-                return;
-            }
             player.getPersistentData().putBoolean("realitybending_telekinesis_enabled", packet.enabled);
             player.displayClientMessage(Component.literal("Telekinesis " + (packet.enabled ? "ENABLED" : "DISABLED")), true);
         });
