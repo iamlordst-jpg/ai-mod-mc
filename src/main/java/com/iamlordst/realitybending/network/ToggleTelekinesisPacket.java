@@ -8,23 +8,27 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.function.Supplier;
 
 public final class ToggleTelekinesisPacket {
-    public ToggleTelekinesisPacket() {}
-    public static void encode(ToggleTelekinesisPacket packet, FriendlyByteBuf buffer) {}
-    public static ToggleTelekinesisPacket decode(FriendlyByteBuf buffer) { return new ToggleTelekinesisPacket(); }
+    private final boolean enabled;
+
+    public ToggleTelekinesisPacket(boolean enabled) { this.enabled = enabled; }
+    public static void encode(ToggleTelekinesisPacket packet, FriendlyByteBuf buffer) {
+        buffer.writeBoolean(packet.enabled);
+    }
+    public static ToggleTelekinesisPacket decode(FriendlyByteBuf buffer) {
+        return new ToggleTelekinesisPacket(buffer.readBoolean());
+    }
 
     public static void handle(ToggleTelekinesisPacket packet, Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
             ServerPlayer player = context.getSender();
-            if (player != null) {
-                if (!player.getPersistentData().getBoolean("realitybending_telekinesis_unlocked")) {
-                    player.displayClientMessage(Component.literal("You haven't unlocked telekinesis yet. Use the Telekinesis Unlock item first."), true);
-                    return;
-                }
-                boolean enabled = !player.getPersistentData().getBoolean("realitybending_telekinesis_enabled");
-                player.getPersistentData().putBoolean("realitybending_telekinesis_enabled", enabled);
-                player.displayClientMessage(Component.literal("Telekinesis " + (enabled ? "ENABLED" : "DISABLED")), true);
+            if (player == null) return;
+            if (!player.getPersistentData().getBoolean("realitybending_telekinesis_unlocked")) {
+                player.displayClientMessage(Component.literal("You haven't unlocked telekinesis yet. Use the Telekinesis Unlock item first."), true);
+                return;
             }
+            player.getPersistentData().putBoolean("realitybending_telekinesis_enabled", packet.enabled);
+            player.displayClientMessage(Component.literal("Telekinesis " + (packet.enabled ? "ENABLED" : "DISABLED")), true);
         });
         context.setPacketHandled(true);
     }
