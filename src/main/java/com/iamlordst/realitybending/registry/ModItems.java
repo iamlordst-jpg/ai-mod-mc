@@ -3,6 +3,7 @@ package com.iamlordst.realitybending.registry;
 import com.iamlordst.realitybending.RealityBending;
 import com.iamlordst.realitybending.item.RealityItem;
 import com.iamlordst.realitybending.item.TelekineticGlove;
+import com.iamlordst.realitybending.item.CaseFileItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -36,10 +37,10 @@ public final class ModItems {
     public static final RegistryObject<Item> REALITY_RIFT = register("reality_rift", RealityItem.Power.REALITY_RIFT, 100);
     public static final RegistryObject<Item> LIGHTNING_SPEAR = register("lightning_spear", RealityItem.Power.LIGHTNING_SPEAR, 120);
     // Inert satirical archive references: no combat abilities or spawn eggs.
-    public static final RegistryObject<Item> CASE_FILE_SALVADOR_RAMOS = ITEMS.register("case_file_salvador_ramos", () -> new Item(new Item.Properties().stacksTo(1)));
-    public static final RegistryObject<Item> CASE_FILE_ADAM_LANZA = ITEMS.register("case_file_adam_lanza", () -> new Item(new Item.Properties().stacksTo(1)));
-    public static final RegistryObject<Item> CASE_FILE_ARTHUR_ACHLEITNER = ITEMS.register("case_file_arthur_achleitner", () -> new Item(new Item.Properties().stacksTo(1)));
-    public static final RegistryObject<Item> CASE_FILE_KOSTA_KECMANOVIC = ITEMS.register("case_file_kosta_kecmanovic", () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> CASE_FILE_ELLIOT_RODGER = ITEMS.register("case_file_elliot_rodger", () -> new CaseFileItem("ELLIOT RODGER", "2014, Isla Vista, California. A mass killing that left victims, families and a community devastated.", "This entry documents the event without celebrating the perpetrator.", new Item.Properties().stacksTo(1)));\n    public static final RegistryObject<Item> CASE_FILE_SALVADOR_RAMOS = ITEMS.register("case_file_salvador_ramos", () -> new CaseFileItem("SALVADOR RAMOS", "2022, Uvalde, Texas: the Robb Elementary School shooting devastated families and a community.", "This entry is a historical record, not a tribute or a reward.", new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> CASE_FILE_ADAM_LANZA = ITEMS.register("case_file_adam_lanza", () -> new CaseFileItem("ADAM LANZA", "2012, Newtown, Connecticut: the Sandy Hook Elementary School shooting devastated families and the wider community.", "This entry records the event in a non-glorifying archive.", new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> CASE_FILE_ARTHUR_ACHLEITNER = ITEMS.register("case_file_arthur_achleitner", () -> new CaseFileItem("ARTHUR ACHLEITNER", "Creator-requested reference. The identity and event details have not been verified for this mod.", "No claims are made here; this archive item deliberately avoids turning an uncertain reference into a tribute.", new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> CASE_FILE_KOSTA_KECMANOVIC = ITEMS.register("case_file_kosta_kecmanovic", () -> new CaseFileItem("KOSTA KECMANOVIĆ", "2023, Belgrade, Serbia: a school shooting that caused profound harm to students, staff, families and the community.", "This is a historical reference, not an endorsement or tribute.", new Item.Properties().stacksTo(1)));
 
     private static RegistryObject<Item> register(String name, RealityItem.Power power, int cooldown) {
         return ITEMS.register(name, () -> new RealityItem(power, cooldown, new Item.Properties().stacksTo(1)));
@@ -66,6 +67,7 @@ public final class ModItems {
         output.accept(BLACK_HOLE.get());
         output.accept(REALITY_RIFT.get());
         output.accept(LIGHTNING_SPEAR.get());
+        output.accept(CASE_FILE_ELLIOT_RODGER.get());
         output.accept(CASE_FILE_SALVADOR_RAMOS.get());
         output.accept(CASE_FILE_ADAM_LANZA.get());
         output.accept(CASE_FILE_ARTHUR_ACHLEITNER.get());
