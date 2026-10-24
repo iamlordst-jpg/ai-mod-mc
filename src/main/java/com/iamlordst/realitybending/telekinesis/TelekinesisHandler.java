@@ -9,11 +9,9 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraftforge.event.TickEvent;
 
-import java.util.UUID;
 
 public final class TelekinesisHandler {
-    private static final String HELD_MOST = "realitybending_held_most";
-    private static final String HELD_LEAST = "realitybending_held_least";
+    private static final String HELD_ID = "realitybending_held_entity_id";
     private static final double RANGE = 32.0;
 
     private TelekinesisHandler() {}
@@ -43,8 +41,7 @@ public final class TelekinesisHandler {
             return;
         }
 
-        player.getPersistentData().putLong(HELD_MOST, target.getUUID().getMostSignificantBits());
-        player.getPersistentData().putLong(HELD_LEAST, target.getUUID().getLeastSignificantBits());
+        player.getPersistentData().putInt(HELD_ID, target.getId());
         target.noPhysics = true;
         Vec3 holdPoint = start.add(look.scale(4.5));
         Vec3 center = target.position().add(0, target.getBbHeight() * 0.5, 0);
@@ -58,14 +55,12 @@ public final class TelekinesisHandler {
     }
 
     private static Entity getHeld(Player player) {
-        if (!player.getPersistentData().contains(HELD_MOST) || !player.getPersistentData().contains(HELD_LEAST)) return null;
-        UUID uuid = new UUID(player.getPersistentData().getLong(HELD_MOST), player.getPersistentData().getLong(HELD_LEAST));
-        return player.level().getEntity(uuid);
+        if (!player.getPersistentData().contains(HELD_ID)) return null;
+        return player.level().getEntity(player.getPersistentData().getInt(HELD_ID));
     }
 
     private static void clearHeld(Player player) {
-        player.getPersistentData().remove(HELD_MOST);
-        player.getPersistentData().remove(HELD_LEAST);
+        player.getPersistentData().remove(HELD_ID);
     }
 
     private static void releaseHeld(Player player) {
