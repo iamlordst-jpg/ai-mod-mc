@@ -47,5 +47,9 @@
   "key.categories.realitybending": "Reality Bending",
   "key.realitybending.toggle_telekinesis": "Toggle Telekinesis",
   "key.realitybending.ki_blast_ability": "Charge / Fire Ki Blast",
-  "key.realitybending.kamehameha_ability": "Charge / Fire Kamehameha"
+  "key.realitybending.kamehameha_ability": "Charge / Fire Kamehameha",
+  "key.realitybending.black_hole_ability": "Charge / Open Black Hole",
+  "key.realitybending.spirit_bomb_ability": "Charge / Throw Spirit Bomb",
+  "key.realitybending.instant_transmission_ability": "Instant Transmission",
+  "key.realitybending.time_stop_ability": "Time Stop"
 }
