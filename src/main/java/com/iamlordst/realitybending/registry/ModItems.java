@@ -2,6 +2,7 @@ package com.iamlordst.realitybending.registry;
 
 import com.iamlordst.realitybending.RealityBending;
 import com.iamlordst.realitybending.item.RealityItem;
+import com.iamlordst.realitybending.item.GeoRealityItem;
 import com.iamlordst.realitybending.item.TelekineticGlove;
 import com.iamlordst.realitybending.item.CaseFileItem;
 import net.minecraft.world.item.CreativeModeTab;
@@ -44,7 +45,7 @@ public final class ModItems {
     public static final RegistryObject<Item> CASE_FILE_KOSTA_KECMANOVIC = ITEMS.register("case_file_kosta_kecmanovic", () -> new CaseFileItem("KOSTA KECMANOVIĆ", "2023, Belgrade, Serbia: a school shooting that caused profound harm to students, staff, families and the community.", "This is a historical reference, not an endorsement or tribute.", new Item.Properties().stacksTo(1)));
 
     private static RegistryObject<Item> register(String name, RealityItem.Power power, int cooldown) {
-        return ITEMS.register(name, () -> new RealityItem(power, cooldown, new Item.Properties().stacksTo(1)));
+        return ITEMS.register(name, () -> new GeoRealityItem(power, cooldown, new Item.Properties().stacksTo(1)));
     }
 
     public static void addToTab(CreativeModeTab.Output output) {
