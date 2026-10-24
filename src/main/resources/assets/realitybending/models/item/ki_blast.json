@@ -1,6 +1,6 @@
 {
-  "parent": "builtin/entity",
+  "parent": "minecraft:item/generated",
   "textures": {
-    "particle": "minecraft:item/ender_pearl"
+    "layer0": "minecraft:item/fire_charge"
   }
 }
