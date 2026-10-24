@@ -38,14 +38,22 @@ public final class EnergyProjectileRenderer extends EntityRenderer<EnergyProject
             drawRing(out,pose,.86F,.09F,.28F,.72F,1F,.94F);
             stack.mulPose(Axis.YP.rotation(-t*.19F));pose=stack.last();
             drawRing(out,pose,1.28F,.045F,.9F,.3F,1F,.9F);
+        } else if(e.visualType()==2 && e.beamLength()==2.0F) {
+            float t=e.tickCount+partial,pulse=1F+Mth.sin(t*.42F)*.08F,r=(.38F+e.charge()*.42F)*pulse;
+            drawSphere(out,pose,r,.012F,.002F,.035F,1F);
+            drawSphere(out,pose,r*.58F,0F,0F,0F,1F);
+            stack.mulPose(Axis.YP.rotation(t*.17F));pose=stack.last();
+            drawRing(out,pose,r*1.5F,.06F,.52F,.08F,1F,1F);
+            stack.mulPose(Axis.XP.rotation(.9F));pose=stack.last();
+            drawRing(out,pose,r*1.25F,.045F,.23F,.52F,1F,.95F);
         } else {
             float charge=e.visualType()==2?e.charge():1F;
-            float pulse=1F+Mth.sin((e.tickCount+partial)*.5F)*.09F;
-            float radius=(e.visualType()==2?.4F+charge*.78F:.42F)*pulse;
-            drawSphere(out,pose,radius,.12F,.34F,1F,1F);
-            drawSphere(out,pose,radius*.78F,.2F,.72F,1F,1F);
-            drawSphere(out,pose,radius*.5F,.65F,.94F,1F,1F);
-            drawSphere(out,pose,radius*.25F,1F,1F,1F,1F);
+            float pulse=1F+Mth.sin((e.tickCount+partial)*.5F)*.08F;
+            float radius=(e.visualType()==2?.42F+charge*.8F:.42F)*pulse;
+            drawSphere(out,pose,radius,.1F,.32F,1F,1F);
+            drawSphere(out,pose,radius*.8F,.2F,.7F,1F,1F);
+            drawSphere(out,pose,radius*.52F,.68F,.95F,1F,1F);
+            drawSphere(out,pose,radius*.27F,1F,1F,1F,1F);
             stack.mulPose(Axis.YP.rotation((e.tickCount+partial)*.18F));pose=stack.last();
             drawRing(out,pose,radius*1.3F,.045F,.55F,.86F,1F,1F);
         }
