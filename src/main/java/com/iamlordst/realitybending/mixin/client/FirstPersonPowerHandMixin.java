@@ -26,33 +26,32 @@ public abstract class FirstPersonPowerHandMixin {
         if(ability<0&&!tele)return;
         poseStack.pushPose();realitybending$posePushed=true;
         boolean right=side==HumanoidArm.RIGHT;float time=player.tickCount+Minecraft.getInstance().getFrameTime();float pulse=(float)Math.sin(time*.32F);
-        if(ability==1){
-            // Both hands rise into a clear, forward-facing beam stance.
-            poseStack.translate(right?-.11F:.11F,.20F+pulse*.012F,-.035F);
-            poseStack.mulPose(Axis.XP.rotationDegrees(-4F+pulse));
+        if(tele&&ability<0){
+            // Eleven-inspired pose: raised, open palm reaching toward the crosshair.
+            poseStack.translate(right?-.17F:.17F,.32F+pulse*.018F,-.20F);
+            poseStack.mulPose(Axis.XP.rotationDegrees(-29F+pulse*1.2F));
+            poseStack.mulPose(Axis.YP.rotationDegrees(right?8F:-8F));
+            poseStack.mulPose(Axis.ZP.rotationDegrees(right?-27F:27F));
+        } else if(ability==1){
+            poseStack.translate(right?-.11F:.11F,.22F+pulse*.014F,-.10F);
+            poseStack.mulPose(Axis.XP.rotationDegrees(-10F+pulse));
             poseStack.mulPose(Axis.YP.rotationDegrees((right?1:-1)*13F));
             poseStack.mulPose(Axis.ZP.rotationDegrees((right?-1:1)*8F));
         } else if(ability==0){
-            poseStack.translate(right?-.12F:.08F,.16F+pulse*.014F,-.015F);
-            poseStack.mulPose(Axis.XP.rotationDegrees(-8F+pulse*1.5F));
+            poseStack.translate(right?-.12F:.08F,.20F+pulse*.014F,-.12F);
+            poseStack.mulPose(Axis.XP.rotationDegrees(-12F+pulse*1.5F));
             poseStack.mulPose(Axis.YP.rotationDegrees(right?12F:-8F));
             poseStack.mulPose(Axis.ZP.rotationDegrees(right?-10F:8F));
         } else if(ability==2){
-            poseStack.translate(right?-.13F:.13F,.18F+pulse*.016F,-.02F);
-            poseStack.mulPose(Axis.XP.rotationDegrees(-12F+pulse));
+            poseStack.translate(right?-.13F:.13F,.22F+pulse*.016F,-.10F);
+            poseStack.mulPose(Axis.XP.rotationDegrees(-16F+pulse));
             poseStack.mulPose(Axis.YP.rotationDegrees((right?1:-1)*18F));
             poseStack.mulPose(Axis.ZP.rotationDegrees((right?-1:1)*17F));
-        } else if(ability>=3){
-            poseStack.translate(right?-.11F:.11F,.17F+pulse*.012F,-.015F);
-            poseStack.mulPose(Axis.XP.rotationDegrees(-10F+pulse));
+        } else {
+            poseStack.translate(right?-.11F:.11F,.19F+pulse*.012F,-.08F);
+            poseStack.mulPose(Axis.XP.rotationDegrees(-12F+pulse));
             poseStack.mulPose(Axis.YP.rotationDegrees((right?1:-1)*12F));
             poseStack.mulPose(Axis.ZP.rotationDegrees((right?-1:1)*12F));
-        } else {
-            // Telekinesis uses an open-palmed, raised arm pose even with empty hands.
-            poseStack.translate(right?-.12F:.12F,.21F+pulse*.012F,-.025F);
-            poseStack.mulPose(Axis.XP.rotationDegrees(-18F+pulse*2F));
-            poseStack.mulPose(Axis.YP.rotationDegrees(right?12F:-12F));
-            poseStack.mulPose(Axis.ZP.rotationDegrees(right?-20F:20F));
         }
     }
     @Inject(method="renderPlayerArm",at=@At("RETURN"))
