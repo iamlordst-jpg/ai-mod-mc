@@ -13,6 +13,7 @@ import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -24,14 +25,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 @Mixin(ItemInHandRenderer.class)
 public abstract class FirstPersonPowerHandMixin {
+    @Unique private boolean realitybending$posePushed = false;
     @Inject(method = "renderPlayerArm", at = @At("HEAD"))
     private void realitybending$beginArmPose(PoseStack poseStack, MultiBufferSource buffers,
             int packedLight, float equipProgress, float swingProgress, HumanoidArm side,
             CallbackInfo ci) {
+        realitybending$posePushed = false;
         Player player = Minecraft.getInstance().player;
         if (player == null) return;
 
         poseStack.pushPose();
+        realitybending$posePushed = true;
         boolean right = side == HumanoidArm.RIGHT;
         ItemStack held = right == (player.getMainArm() == HumanoidArm.RIGHT)
                 ? player.getMainHandItem() : player.getOffhandItem();
@@ -97,6 +101,9 @@ public abstract class FirstPersonPowerHandMixin {
             CallbackInfo ci) {
         // This method only runs when an arm is being rendered. A balanced pose
         // stack keeps vanilla's item transform and later render calls untouched.
-        if (Minecraft.getInstance().player != null) poseStack.popPose();
+        if (realitybending$posePushed) {
+            poseStack.popPose();
+            realitybending$posePushed = false;
+        }
     }
 }
