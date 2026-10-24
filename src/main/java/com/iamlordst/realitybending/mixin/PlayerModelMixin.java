@@ -3,7 +3,7 @@ package com.iamlordst.realitybending.mixin;
 import com.iamlordst.realitybending.item.RealityItem;
 import com.iamlordst.realitybending.registry.ModItems;
 import net.minecraft.client.model.PlayerModel;
-import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -12,12 +12,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
  * Applies custom arm rotations after vanilla PlayerModel animation has run.
- * RenderPlayerEvent.Pre runs too early for reliable direct model rotations.
+ * The target setupAnim method accepts LivingEntity, not AbstractClientPlayer.
  */
 @Mixin(PlayerModel.class)
 public abstract class PlayerModelMixin {
     @Inject(method = "setupAnim", at = @At("TAIL"))
-    private void realitybending$applyPowerPose(AbstractClientPlayer player, float limbSwing,
+    private void realitybending$applyPowerPose(LivingEntity player, float limbSwing,
             float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
         PlayerModel<?> model = (PlayerModel<?>)(Object)this;
         ItemStack using = player.getUseItem();
