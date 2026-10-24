@@ -38,23 +38,23 @@ public final class ModItems {
     }
 
     public static void addToTab(CreativeModeTab.Output output) {
-        output.accept(TELEKINETIC_GLOVE);
-        output.accept(FORUM_PHANTOM_MASK);
-        output.accept(REALITY_CHECK);
-        output.accept(PLOT_ARMOR);
-        output.accept(LAG_SPIKE);
-        output.accept(POCKET_DIMENSION);
-        output.accept(ADMIN_WAND);
-        output.accept(CHAOS_DICE);
-        output.accept(MEME_BEACON);
-        output.accept(GRAVITY_BOOTS);
-        output.accept(KI_BLAST);
-        output.accept(KAMEHAMEHA);
-        output.accept(X_RAY_VISION);
-        output.accept(MIND_READING);
-        output.accept(TIME_WARP);
-        output.accept(PHASE_SHIFT);
-        output.accept(VOID_PULSE);
+        output.accept(TELEKINETIC_GLOVE.get());
+        output.accept(FORUM_PHANTOM_MASK.get());
+        output.accept(REALITY_CHECK.get());
+        output.accept(PLOT_ARMOR.get());
+        output.accept(LAG_SPIKE.get());
+        output.accept(POCKET_DIMENSION.get());
+        output.accept(ADMIN_WAND.get());
+        output.accept(CHAOS_DICE.get());
+        output.accept(MEME_BEACON.get());
+        output.accept(GRAVITY_BOOTS.get());
+        output.accept(KI_BLAST.get());
+        output.accept(KAMEHAMEHA.get());
+        output.accept(X_RAY_VISION.get());
+        output.accept(MIND_READING.get());
+        output.accept(TIME_WARP.get());
+        output.accept(PHASE_SHIFT.get());
+        output.accept(VOID_PULSE.get());
     }
 
     private ModItems() {}
