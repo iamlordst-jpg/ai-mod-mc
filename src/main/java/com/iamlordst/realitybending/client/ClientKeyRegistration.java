@@ -5,14 +5,16 @@ import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = RealityBending.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = net.minecraftforge.api.distmarker.Dist.CLIENT)
+@Mod.EventBusSubscriber(modid=RealityBending.MOD_ID,bus=Mod.EventBusSubscriber.Bus.MOD,value=net.minecraftforge.api.distmarker.Dist.CLIENT)
 public final class ClientKeyRegistration {
     private ClientKeyRegistration() {}
-
-    @SubscribeEvent
-    public static void registerKeys(RegisterKeyMappingsEvent event) {
+    @SubscribeEvent public static void registerKeys(RegisterKeyMappingsEvent event) {
         event.register(TelekinesisKeybind.TOGGLE);
         event.register(PowerAbilityKeybind.KI_BLAST);
         event.register(PowerAbilityKeybind.KAMEHAMEHA);
+        event.register(PowerAbilityKeybind.BLACK_HOLE);
+        event.register(PowerAbilityKeybind.GRAVITY_CRUSH);
+        event.register(PowerAbilityKeybind.LIGHTNING_SPEAR);
+        event.register(PowerAbilityKeybind.VOID_PULSE);
     }
 }
