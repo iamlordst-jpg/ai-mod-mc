@@ -1,18 +1,20 @@
 package com.iamlordst.realitybending.telekinesis;
 
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraftforge.event.TickEvent;
-
 
 public final class TelekinesisHandler {
     private static final String HELD_ID = "realitybending_held_entity_id";
-    private static final double RANGE = 32.0;
+    private static final double RANGE = 40.0;
+    private static final double HOLD_DISTANCE = 5.5;
 
     private TelekinesisHandler() {}
 
@@ -25,33 +27,49 @@ public final class TelekinesisHandler {
             return;
         }
 
-        Vec3 start = player.getEyePosition();
-        Vec3 look = player.getLookAngle().normalize();
-        Vec3 end = start.add(look.scale(RANGE));
-        AABB searchBox = player.getBoundingBox().expandTowards(look.scale(RANGE)).inflate(3.0);
-        EntityHitResult hit = ProjectileUtil.getEntityHitResult(player, start, end, searchBox,
-            entity -> entity.isAlive() && entity instanceof LivingEntity && entity != player,
-            RANGE * RANGE);
-
-        Entity previous = getHeld(player);
-        Entity target = hit == null ? null : hit.getEntity();
-        if (previous != null && previous != target) previous.noPhysics = false;
-        if (target == null) {
+        Entity target = getHeld(player);
+        // Keep the current target locked while the camera moves. Only acquire a new
+        // target when nothing is already held, so a small aim adjustment won't drop it.
+        if (target == null || !target.isAlive() || target.distanceToSqr(player) > RANGE * RANGE) {
+            if (target != null) {
+                target.noPhysics = false;
+                target.setNoGravity(false);
+            }
             clearHeld(player);
-            return;
+            Vec3 start = player.getEyePosition();
+            Vec3 look = player.getLookAngle().normalize();
+            Vec3 end = start.add(look.scale(RANGE));
+            AABB searchBox = player.getBoundingBox().expandTowards(look.scale(RANGE)).inflate(4.0);
+            EntityHitResult hit = ProjectileUtil.getEntityHitResult(player, start, end, searchBox,
+                entity -> entity.isAlive() && entity instanceof LivingEntity && entity != player,
+                RANGE * RANGE);
+            target = hit == null ? null : hit.getEntity();
+            if (target == null) return;
+            player.getPersistentData().putInt(HELD_ID, target.getId());
         }
 
-        player.getPersistentData().putInt(HELD_ID, target.getId());
-        target.noPhysics = true;
-        Vec3 holdPoint = start.add(look.scale(4.5));
+        Vec3 look = player.getLookAngle().normalize();
+        Vec3 holdPoint = player.getEyePosition().add(look.scale(HOLD_DISTANCE));
         Vec3 center = target.position().add(0, target.getBbHeight() * 0.5, 0);
         Vec3 difference = holdPoint.subtract(center);
-        Vec3 velocity = difference.scale(0.48);
+        // Strong spring-like tracking with a generous speed cap; camera motion is followed
+        // continuously rather than relying on the crosshair to keep hitting the entity.
+        Vec3 velocity = target.getDeltaMovement().scale(0.18).add(difference.scale(0.72));
         double length = velocity.length();
-        if (length > 2.5) velocity = velocity.scale(2.5 / length);
+        if (length > 3.4) velocity = velocity.scale(3.4 / length);
+
+        target.noPhysics = true; // prevents player/entity collision from shoving the target away
+        target.setNoGravity(true);
         target.setDeltaMovement(velocity);
         target.hurtMarked = true;
         target.fallDistance = 0;
+
+        if (player.level() instanceof ServerLevel server && player.tickCount % 2 == 0) {
+            double y = target.getY() + target.getBbHeight() * 0.5;
+            server.sendParticles(ParticleTypes.ENCHANT, target.getX(), y, target.getZ(), 5, .35, .45, .35, .08);
+            server.sendParticles(ParticleTypes.REVERSE_PORTAL, target.getX(), y, target.getZ(), 2, .2, .25, .2, .01);
+            server.sendParticles(ParticleTypes.END_ROD, holdPoint.x, holdPoint.y, holdPoint.z, 1, .05, .05, .05, .01);
+        }
     }
 
     private static Entity getHeld(Player player) {
@@ -65,7 +83,10 @@ public final class TelekinesisHandler {
 
     private static void releaseHeld(Player player) {
         Entity previous = getHeld(player);
-        if (previous != null) previous.noPhysics = false;
+        if (previous != null) {
+            previous.noPhysics = false;
+            previous.setNoGravity(false);
+        }
         clearHeld(player);
     }
 }
