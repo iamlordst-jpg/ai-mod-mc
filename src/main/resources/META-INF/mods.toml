@@ -3,10 +3,10 @@ loaderVersion="[47,)"
 license="MIT"
 [[mods]]
 modId="realitybending"
-version="1.0.0"
+version="1.1.0"
 displayName="Reality Bending"
 authors="iamlordst-jpg"
-description="Ten reality-bending artifacts that manipulate movement, gravity, and time."
+description="A supernatural powers mod with a GeckoLib animation foundation and custom power sound profiles."
 [[dependencies.realitybending]]
 modId="forge"
 mandatory=true
@@ -18,4 +18,10 @@ modId="minecraft"
 mandatory=true
 versionRange="[1.20.1,1.20.2)"
 ordering="NONE"
+side="BOTH"
+[[dependencies.realitybending]]
+modId="geckolib"
+mandatory=true
+versionRange="[4.7,5)"
+ordering="AFTER"
 side="BOTH"
