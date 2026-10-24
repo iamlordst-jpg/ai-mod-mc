@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.iamlordst.realitybending.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "PlayerModelMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
