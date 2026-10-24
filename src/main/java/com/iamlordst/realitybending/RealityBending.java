@@ -2,6 +2,7 @@ package com.iamlordst.realitybending;
 
 import com.iamlordst.realitybending.network.ModNetwork;
 import com.iamlordst.realitybending.registry.ModItems;
+import com.iamlordst.realitybending.registry.ModEntities;
 import com.iamlordst.realitybending.registry.ModSounds;
 import com.iamlordst.realitybending.telekinesis.TelekinesisHandler;
 import net.minecraft.network.chat.Component;
@@ -30,6 +31,7 @@ public final class RealityBending {
     public RealityBending() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         ModItems.ITEMS.register(bus);
+        ModEntities.ENTITY_TYPES.register(bus);
         ModSounds.SOUNDS.register(bus);
         TABS.register(bus);
         ModNetwork.register();
