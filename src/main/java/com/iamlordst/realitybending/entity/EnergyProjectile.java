@@ -32,10 +32,22 @@ public final class EnergyProjectile extends Entity {
         super.tick();
         if (visualType() == 2) {
             Entity owner = level().getEntity(ownerId());
-            if (!(owner instanceof Player player) || !player.isAlive() || !player.isUsingItem()) { discard(); return; }
+            if (!(owner instanceof Player player) || !player.isAlive()) { discard(); return; }
+            boolean abilityCharge = player.getPersistentData().getBoolean("realitybending_ability_charging");
+            if (!player.isUsingItem() && !abilityCharge) { discard(); return; }
             Vec3 center = player.getEyePosition().add(player.getLookAngle().normalize().scale(1.05));
             setPos(center.x, center.y, center.z);
-            entityData.set(CHARGE, Math.min(1.0F, (72000 - player.getUseItemRemainingTicks()) / 42.0F));
+            float charge = abilityCharge
+                    ? (player.tickCount - player.getPersistentData().getInt("realitybending_ability_start_tick")) / 45.0F
+                    : (72000 - player.getUseItemRemainingTicks()) / 42.0F;
+            entityData.set(CHARGE, Math.min(1.0F, Math.max(0.0F, charge)));
+            if (!level().isClientSide && player.tickCount % 2 == 0) {
+                net.minecraft.server.level.ServerLevel server = (net.minecraft.server.level.ServerLevel) level();
+                server.sendParticles(net.minecraft.core.particles.ParticleTypes.ELECTRIC_SPARK,
+                        center.x, center.y, center.z, 4, .14, .14, .14, .08);
+                server.sendParticles(net.minecraft.core.particles.ParticleTypes.END_ROD,
+                        center.x, center.y, center.z, 2, .09, .09, .09, .015);
+            }
             return;
         }
         if (visualType() == 1) { if (tickCount > 12) discard(); return; }
