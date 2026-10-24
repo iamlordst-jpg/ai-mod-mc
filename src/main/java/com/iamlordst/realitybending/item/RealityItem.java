@@ -38,6 +38,10 @@ public class RealityItem extends Item {
         this.cooldown = cooldown;
     }
 
+    public Power getPowerType() {
+        return power;
+    }
+
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
