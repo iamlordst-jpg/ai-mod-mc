@@ -19,6 +19,17 @@ public final class ModSounds {
     public static final RegistryObject<SoundEvent> VOID_CAST = register("void_cast");
     public static final RegistryObject<SoundEvent> RIFT_CAST = register("rift_cast");
     public static final RegistryObject<SoundEvent> LIGHTNING_CAST = register("lightning_cast");
+    public static final RegistryObject<SoundEvent> FEDORA_ACTIVATE = register("fedora_activate");
+    public static final RegistryObject<SoundEvent> TIME_WARP_CAST = register("time_warp_cast");
+    public static final RegistryObject<SoundEvent> TELEPATHY_CAST = register("telepathy_cast");
+    public static final RegistryObject<SoundEvent> GRAVITY_CAST = register("gravity_cast");
+    public static final RegistryObject<SoundEvent> DEFENSE_CAST = register("defense_cast");
+    public static final RegistryObject<SoundEvent> CHAOS_CAST = register("chaos_cast");
+    public static final RegistryObject<SoundEvent> ADMIN_CAST = register("admin_cast");
+    public static final RegistryObject<SoundEvent> PHASE_CAST = register("phase_cast");
+    public static final RegistryObject<SoundEvent> LAG_CAST = register("lag_cast");
+    public static final RegistryObject<SoundEvent> REVEAL_CAST = register("reveal_cast");
+    public static final RegistryObject<SoundEvent> MEME_BEACON_CAST = register("meme_beacon_cast");
 
     private static RegistryObject<SoundEvent> register(String name) {
         ResourceLocation id = new ResourceLocation(RealityBending.MOD_ID, name);
