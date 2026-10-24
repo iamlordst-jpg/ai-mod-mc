@@ -223,41 +223,6 @@ public class RealityItem extends Item {
                 player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 300, 1));
                 return true;
             }
-            case KI_BLAST -> {
-                Vec3 look = player.getLookAngle().normalize();
-                Vec3 origin = player.getEyePosition().add(look.scale(0.8));
-                SmallFireball blast = new SmallFireball(level, player, look.x, look.y, look.z);
-                blast.setPos(origin.x, origin.y, origin.z);
-                blast.setSecondsOnFire(0);
-                level.addFreshEntity(blast);
-                return true;
-            }
-            case KAMEHAMEHA -> {
-                Vec3 start = player.getEyePosition().add(player.getLookAngle().scale(1.0));
-                Vec3 direction = player.getLookAngle().normalize();
-                Vec3 end = start.add(direction.scale(32));
-                BlockHitResult blockHit = level.clip(new net.minecraft.world.level.ClipContext(start, end,
-                    net.minecraft.world.level.ClipContext.Block.COLLIDER,
-                    net.minecraft.world.level.ClipContext.Fluid.NONE, player));
-                Vec3 beamEnd = blockHit.getType() == HitResult.Type.BLOCK ? blockHit.getLocation() : end;
-                double length = start.distanceTo(beamEnd);
-                for (double d = 0; d < length; d += 0.35) {
-                    Vec3 point = start.add(direction.scale(d));
-                    if (level instanceof ServerLevel serverLevel) serverLevel.sendParticles(ParticleTypes.END_ROD, point.x, point.y, point.z, 2, .08, .08, .08, 0.01);
-                    if (level instanceof ServerLevel serverLevel) serverLevel.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, point.x, point.y, point.z, 1, .04, .04, .04, 0.01);
-                }
-                AABB beamBox = new AABB(start, beamEnd).inflate(1.2);
-                List<LivingEntity> targets = level.getEntitiesOfClass(LivingEntity.class, beamBox,
-                    e -> e != player && e.isAlive() && beamDistanceSquared(e, start, direction, length) < 2.2);
-                for (LivingEntity target : targets) {
-                    target.hurt(level.damageSources().magic(), 18.0F);
-                    target.setDeltaMovement(target.getDeltaMovement().add(direction.scale(1.8)));
-                    target.hurtMarked = true;
-                }
-                level.playSound(null, player.blockPosition(), net.minecraft.sounds.SoundEvents.GHAST_SHOOT,
-                    net.minecraft.sounds.SoundSource.PLAYERS, 2.0F, 0.65F);
-                return true;
-            }
             case X_RAY_VISION -> {
                 player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 500, 0));
                 player.addEffect(new MobEffectInstance(MobEffects.GLOWING, 500, 0));
