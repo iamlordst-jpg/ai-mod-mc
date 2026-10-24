@@ -1,6 +1,7 @@
 package com.iamlordst.realitybending.mixin.client;
 
 import com.iamlordst.realitybending.client.TelekinesisKeybind;
+import com.iamlordst.realitybending.client.PowerAbilityKeybind;
 import com.iamlordst.realitybending.item.RealityItem;
 import com.iamlordst.realitybending.item.TelekineticGlove;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -38,6 +39,22 @@ public abstract class FirstPersonPowerHandMixin {
         ItemStack off = player.getOffhandItem();
         float time = player.tickCount + Minecraft.getInstance().getFrameTime();
         float pulse = (float)Math.sin(time * 0.30F);
+
+        if (PowerAbilityKeybind.isCharging(1)) {
+            float charge = Math.min(1.0F, (player.tickCount % 50) / 50.0F);
+            poseStack.translate(right ? -0.15F : 0.15F, 0.025F + charge * 0.035F, -0.13F - charge * 0.14F);
+            poseStack.mulPose(Axis.XP.rotationDegrees(-17.0F - charge * 22.0F + pulse * 1.8F));
+            poseStack.mulPose(Axis.YP.rotationDegrees((right ? 1 : -1) * (20.0F + charge * 20.0F)));
+            poseStack.mulPose(Axis.ZP.rotationDegrees((right ? -1 : 1) * (13.0F + charge * 12.0F)));
+            return;
+        }
+        if (PowerAbilityKeybind.isCharging(0)) {
+            poseStack.translate(right ? -0.10F : 0.08F, pulse * 0.012F, -0.12F);
+            poseStack.mulPose(Axis.XP.rotationDegrees(-13.0F));
+            poseStack.mulPose(Axis.YP.rotationDegrees(right ? 14.0F : -8.0F));
+            poseStack.mulPose(Axis.ZP.rotationDegrees(right ? -9.0F : 8.0F));
+            return;
+        }
 
         if (held.getItem() instanceof RealityItem item) {
             boolean charging = player.isUsingItem() && player.getUseItem().is(held.getItem());
