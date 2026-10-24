@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "builtin/entity",
   "textures": {
-    "layer0": "minecraft:item/end_crystal"
+    "particle": "minecraft:item/ender_pearl"
   }
 }
