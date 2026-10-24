@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "minecraft:iron_boots" },
+    { "item": "minecraft:feather" },
+    { "item": "minecraft:phantom_membrane" }
+  ],
+  "result": { "item": "realitybending:gravity_boots", "count": 1 }
+}
