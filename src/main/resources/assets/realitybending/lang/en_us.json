@@ -1,6 +1,7 @@
 {
+  "itemGroup.realitybending.powers": "Reality Bending Powers",
   "item.realitybending.telekinetic_glove": "Telekinesis Unlock",
-  "item.realitybending.forum_phantom_mask": "Elliot Rodger Parody Relic",
+  "item.realitybending.forum_phantom_mask": "Elliot Rodger's Supreme Gentleman Fedora (Parody)",
   "item.realitybending.reality_check": "Reality Check",
   "item.realitybending.plot_armor": "Plot Armor",
   "item.realitybending.lag_spike": "Lag Spike",
@@ -8,5 +9,12 @@
   "item.realitybending.admin_wand": "Admin Wand",
   "item.realitybending.chaos_dice": "Chaos Dice",
   "item.realitybending.meme_beacon": "Meme Beacon",
-  "item.realitybending.gravity_boots": "Gravity Boots"
+  "item.realitybending.gravity_boots": "Gravity Boots",
+  "item.realitybending.ki_blast": "Ki Blast",
+  "item.realitybending.kamehameha": "KAMEHAMEHA",
+  "item.realitybending.x_ray_vision": "X-Ray Pulse",
+  "item.realitybending.mind_reading": "Telepathy",
+  "item.realitybending.time_warp": "Time Warp",
+  "item.realitybending.phase_shift": "Phase Shift",
+  "item.realitybending.void_pulse": "Void Pulse"
 }
