@@ -13,8 +13,8 @@ public final class ClientKeyRegistration {
         event.register(PowerAbilityKeybind.KI_BLAST);
         event.register(PowerAbilityKeybind.KAMEHAMEHA);
         event.register(PowerAbilityKeybind.BLACK_HOLE);
-        event.register(PowerAbilityKeybind.GRAVITY_CRUSH);
-        event.register(PowerAbilityKeybind.LIGHTNING_SPEAR);
-        event.register(PowerAbilityKeybind.VOID_PULSE);
+        event.register(PowerAbilityKeybind.SPIRIT_BOMB);
+        event.register(PowerAbilityKeybind.INSTANT_TRANSMISSION);
+        event.register(PowerAbilityKeybind.TIME_STOP);
     }
 }
