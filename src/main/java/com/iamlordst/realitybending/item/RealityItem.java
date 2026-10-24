@@ -363,11 +363,24 @@ public final class RealityItem extends Item {
     }
 
     private void playPowerSound(Level level, Player player) {
-        net.minecraft.sounds.SoundEvent sound = ModSounds.POWER_CAST.get();
+        net.minecraft.sounds.SoundEvent sound = switch (power) {
+            case FORUM_PHANTOM_MASK -> ModSounds.FEDORA_ACTIVATE.get();
+            case BLACK_HOLE, VOID_PULSE -> ModSounds.VOID_CAST.get();
+            case REALITY_RIFT, POCKET_DIMENSION -> ModSounds.RIFT_CAST.get();
+            case LIGHTNING_SPEAR -> ModSounds.LIGHTNING_CAST.get();
+            case TIME_WARP -> ModSounds.TIME_WARP_CAST.get();
+            case MIND_READING -> ModSounds.TELEPATHY_CAST.get();
+            case GRAVITY_BOOTS -> ModSounds.GRAVITY_CAST.get();
+            case PLOT_ARMOR -> ModSounds.DEFENSE_CAST.get();
+            case CHAOS_DICE -> ModSounds.CHAOS_CAST.get();
+            case ADMIN_WAND -> ModSounds.ADMIN_CAST.get();
+            case PHASE_SHIFT -> ModSounds.PHASE_CAST.get();
+            case LAG_SPIKE -> ModSounds.LAG_CAST.get();
+            case REALITY_CHECK, X_RAY_VISION -> ModSounds.REVEAL_CAST.get();
+            case MEME_BEACON -> ModSounds.MEME_BEACON_CAST.get();
+            default -> ModSounds.POWER_CAST.get();
+        };
         float pitch = 0.9F + level.random.nextFloat() * 0.25F;
-        if (power == Power.BLACK_HOLE || power == Power.VOID_PULSE) sound = ModSounds.VOID_CAST.get();
-        else if (power == Power.REALITY_RIFT || power == Power.POCKET_DIMENSION) sound = ModSounds.RIFT_CAST.get();
-        else if (power == Power.LIGHTNING_SPEAR) sound = ModSounds.LIGHTNING_CAST.get();
         level.playSound(null, player.blockPosition(), sound, net.minecraft.sounds.SoundSource.PLAYERS, 1.0F, pitch);
     }
 
