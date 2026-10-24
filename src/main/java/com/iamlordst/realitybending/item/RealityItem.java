@@ -85,8 +85,19 @@ public class RealityItem extends Item {
 
     @Override
     public void onUseTick(Level level, net.minecraft.world.entity.LivingEntity entity, ItemStack stack, int remainingUseDuration) {
-        // No charge-orb entity is spawned. Charging remains indicated by the
-        // held-item pose and sound; the Kamehameha beam is still rendered on release.
+        if (!(entity instanceof Player player) || !(level instanceof ServerLevel server) || remainingUseDuration % 2 != 0) return;
+        Vec3 look = player.getLookAngle().normalize();
+        Vec3 center = player.getEyePosition().add(look.scale(1.05));
+        boolean chargeOrbExists = !server.getEntitiesOfClass(EnergyProjectile.class, player.getBoundingBox().inflate(4.0),
+            e -> e.visualType() == 2 && e.ownerId() == player.getId()).isEmpty();
+        if (!chargeOrbExists) {
+            EnergyProjectile chargeOrb = new EnergyProjectile(ModEntities.ENERGY_PROJECTILE.get(), level);
+            chargeOrb.configure(2, 0.0F, player);
+            chargeOrb.setPos(center.x, center.y, center.z);
+            server.addFreshEntity(chargeOrb);
+        }
+        // Intentionally no vanilla END_ROD / flame / spark particles here.
+        // The custom rendered charge sphere is the only charging visual.
     }
 
     @Override
