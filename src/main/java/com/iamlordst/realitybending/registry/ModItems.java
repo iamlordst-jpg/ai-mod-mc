@@ -48,33 +48,8 @@ public final class ModItems {
         return ITEMS.register(name, () -> new GeoRealityItem(power, cooldown, new Item.Properties().stacksTo(1)));
     }
 
-    public static void addToTab(CreativeModeTab.Output output) {
-        output.accept(TELEKINETIC_GLOVE.get());
-        output.accept(FORUM_PHANTOM_MASK.get());
-        output.accept(REALITY_CHECK.get());
-        output.accept(PLOT_ARMOR.get());
-        output.accept(LAG_SPIKE.get());
-        output.accept(POCKET_DIMENSION.get());
-        output.accept(ADMIN_WAND.get());
-        output.accept(CHAOS_DICE.get());
-        output.accept(MEME_BEACON.get());
-        output.accept(GRAVITY_BOOTS.get());
-        output.accept(KI_BLAST.get());
-        output.accept(KAMEHAMEHA.get());
-        output.accept(X_RAY_VISION.get());
-        output.accept(MIND_READING.get());
-        output.accept(TIME_WARP.get());
-        output.accept(PHASE_SHIFT.get());
-        output.accept(VOID_PULSE.get());
-        output.accept(BLACK_HOLE.get());
-        output.accept(REALITY_RIFT.get());
-        output.accept(LIGHTNING_SPEAR.get());
-        output.accept(CASE_FILE_ELLIOT_RODGER.get());
-        output.accept(CASE_FILE_SALVADOR_RAMOS.get());
-        output.accept(CASE_FILE_ADAM_LANZA.get());
-        output.accept(CASE_FILE_ARTHUR_ACHLEITNER.get());
-        output.accept(CASE_FILE_KOSTA_KECMANOVIC.get());
-    }
+    // Powers are keybind-driven; legacy items are hidden.
+    public static void addToTab(CreativeModeTab.Output output) { }
 
     private ModItems() {}
 }
