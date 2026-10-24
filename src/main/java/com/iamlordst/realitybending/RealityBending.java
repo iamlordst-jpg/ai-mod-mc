@@ -4,6 +4,7 @@ import com.iamlordst.realitybending.network.ModNetwork;
 import com.iamlordst.realitybending.registry.ModItems;
 import com.iamlordst.realitybending.telekinesis.TelekinesisHandler;
 import net.minecraft.network.chat.Component;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -11,14 +12,13 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 @Mod(RealityBending.MOD_ID)
 public final class RealityBending {
     public static final String MOD_ID = "realitybending";
     public static final DeferredRegister<CreativeModeTab> TABS =
-        DeferredRegister.create(ForgeRegistries.CREATIVE_MODE_TABS, MOD_ID);
+        DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
     public static final RegistryObject<CreativeModeTab> POWERS_TAB = TABS.register("powers",
         () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.realitybending.powers"))
