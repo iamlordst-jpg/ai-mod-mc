@@ -9,7 +9,8 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.SmallFireball;
+import com.iamlordst.realitybending.entity.EnergyProjectile;
+import com.iamlordst.realitybending.registry.ModEntities;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
@@ -91,6 +92,14 @@ public class RealityItem extends Item {
         side = side.normalize();
         Vec3 up = look.cross(side).normalize();
         Vec3 center = player.getEyePosition().add(look.scale(0.85));
+        boolean chargeOrbExists = !server.getEntitiesOfClass(EnergyProjectile.class, player.getBoundingBox().inflate(4.0),
+            e -> e.visualType() == 2 && e.ownerId() == player.getId()).isEmpty();
+        if (!chargeOrbExists) {
+            EnergyProjectile chargeOrb = new EnergyProjectile(ModEntities.ENERGY_PROJECTILE.get(), level);
+            chargeOrb.configure(2, 0.0F, player);
+            chargeOrb.setPos(center.x, center.y, center.z);
+            server.addFreshEntity(chargeOrb);
+        }
         double radius = 0.25 + Math.min(0.65, elapsed / 35.0);
         for (int i = 0; i < 8; i++) {
             double angle = elapsed * 0.24 + i * Math.PI / 4.0;
@@ -106,13 +115,20 @@ public class RealityItem extends Item {
     public void releaseUsing(ItemStack stack, Level level, net.minecraft.world.entity.LivingEntity entity, int timeLeft) {
         if (level.isClientSide || !(entity instanceof Player player)) return;
         int chargeTicks = getUseDuration(stack) - timeLeft;
+        if (level instanceof ServerLevel chargeWorld) {
+            for (EnergyProjectile chargeOrb : chargeWorld.getEntitiesOfClass(EnergyProjectile.class,
+                    player.getBoundingBox().inflate(5.0),
+                    e -> e.visualType() == 2 && e.ownerId() == player.getId())) chargeOrb.discard();
+        }
         if (chargeTicks < 5 || player.getCooldowns().isOnCooldown(this)) return;
         player.getCooldowns().addCooldown(this, cooldown);
         if (power == Power.KI_BLAST) {
             Vec3 look = player.getLookAngle().normalize();
             Vec3 origin = player.getEyePosition().add(look.scale(0.9));
-            SmallFireball blast = new SmallFireball(level, player, look.x, look.y, look.z);
+            EnergyProjectile blast = new EnergyProjectile(ModEntities.ENERGY_PROJECTILE.get(), level);
+            blast.configure(0, Math.min(1.0F, chargeTicks / 42.0F), player);
             blast.setPos(origin.x, origin.y, origin.z);
+            blast.setDeltaMovement(look.scale(1.55));
             level.addFreshEntity(blast);
             if (level instanceof ServerLevel server) {
                 server.sendParticles(ParticleTypes.END_ROD, origin.x, origin.y, origin.z, 18, .16, .16, .16, .08);
@@ -505,6 +521,12 @@ public class RealityItem extends Item {
         Vec3 beamEnd = blockHit.getType() == HitResult.Type.BLOCK ? blockHit.getLocation() : end;
         double length = start.distanceTo(beamEnd);
         double thickness = 0.85 + charge * 0.7;
+        EnergyProjectile beamVisual = new EnergyProjectile(ModEntities.ENERGY_PROJECTILE.get(), level);
+        beamVisual.configure(1, (float)charge, player);
+        beamVisual.setBeamLength((float)length);
+        beamVisual.setPos(start.x, start.y, start.z);
+        beamVisual.setDeltaMovement(direction);
+        level.addFreshEntity(beamVisual);
         if (level instanceof ServerLevel server) {
             for (double d = 0; d < length; d += 0.22) {
                 Vec3 point = start.add(direction.scale(d));
