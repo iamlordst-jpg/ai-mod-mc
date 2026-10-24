@@ -21,8 +21,7 @@ public final class TelekinesisHandler {
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase != TickEvent.Phase.END || event.player.level().isClientSide) return;
         Player player = event.player;
-        if (!player.getPersistentData().getBoolean("realitybending_telekinesis_unlocked")
-            || !player.getPersistentData().getBoolean("realitybending_telekinesis_enabled")) {
+        if (!player.getPersistentData().getBoolean("realitybending_telekinesis_enabled")) {
             releaseHeld(player);
             return;
         }
