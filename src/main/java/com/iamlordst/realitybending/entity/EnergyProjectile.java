@@ -40,7 +40,51 @@ public final class EnergyProjectile extends Entity {
                 }
             }return;
         }
-        if(visualType()==1){if(tickCount>12)discard();return;}
+        if(visualType()==1){
+            Entity owner=level().getEntity(ownerId());
+            if(!(owner instanceof Player player)||!player.isAlive()||tickCount>32){discard();return;}
+            Vec3 direction=player.getLookAngle().normalize();
+            Vec3 start=player.getEyePosition().add(direction.scale(1.05));
+            Vec3 far=start.add(direction.scale(44.0));
+            setPos(start.x,start.y,start.z);
+            setDeltaMovement(direction);
+            var hit=level().clip(new net.minecraft.world.level.ClipContext(start,far,net.minecraft.world.level.ClipContext.Block.COLLIDER,net.minecraft.world.level.ClipContext.Fluid.NONE,this));
+            Vec3 tip=hit.getType()==net.minecraft.world.phys.HitResult.Type.BLOCK?hit.getLocation():far;
+            double length=Math.max(1.0,start.distanceTo(tip));
+            setBeamLength((float)length);
+            if(!level().isClientSide&&level() instanceof ServerLevel server){
+                // Track the caster's aim every tick; the leading edge progressively
+                // cuts through ordinary blocks instead of relying on a one-time ray.
+                if(hit.getType()==net.minecraft.world.phys.HitResult.Type.BLOCK){
+                    BlockPos pos=hit.getBlockPos();
+                    BlockState state=level().getBlockState(pos);
+                    float hardness=state.getDestroySpeed(level(),pos);
+                    if(level().getBlockEntity(pos)==null&&!state.isAir()&&hardness>=0&&hardness<=5.0F){
+                        server.sendParticles(new net.minecraft.core.particles.BlockParticleOption(ParticleTypes.BLOCK,state),tip.x,tip.y,tip.z,22,.25,.25,.25,.1);
+                        level().destroyBlock(pos,true);
+                    }
+                }
+                if(tickCount%2==0){
+                    int segments=Math.min(36,(int)(length/1.5));
+                    for(int i=1;i<=segments;i++){
+                        Vec3 point=start.add(direction.scale(length*i/Math.max(1,segments)));
+                        server.sendParticles(ParticleTypes.ELECTRIC_SPARK,point.x,point.y,point.z,2,.06,.06,.06,.025);
+                    }
+                }
+                if(tickCount%6==0){
+                    AABB beam=new AABB(start,tip).inflate(.85+charge()*.45);
+                    for(LivingEntity target:level().getEntitiesOfClass(LivingEntity.class,beam,e->e.isAlive()&&e.getId()!=ownerId())){
+                        Vec3 relative=target.position().add(0,target.getBbHeight()*.5,0).subtract(start);
+                        double along=relative.dot(direction);
+                        if(along>=0&&along<=length&&relative.subtract(direction.scale(along)).lengthSqr()<1.8){
+                            target.hurt(level().damageSources().magic(),7.0F+charge()*8.0F);
+                            target.setDeltaMovement(target.getDeltaMovement().add(direction.scale(.45+charge()*.6)));target.hurtMarked=true;
+                        }
+                    }
+                }
+            }
+            return;
+        }
         if(visualType()==3){
             if(tickCount>150){if(level() instanceof ServerLevel s)s.sendParticles(ParticleTypes.POOF,getX(),getY(),getZ(),50,1,1,1,.08);discard();return;}
             if(level().isClientSide)return;
