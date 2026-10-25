@@ -6,7 +6,7 @@ modId="realitybending"
 version="1.1.0"
 displayName="Reality Bending"
 authors="iamlordst-jpg"
-description="A supernatural powers mod with a GeckoLib animation foundation and custom power sound profiles."
+description="A supernatural powers mod with custom first-person poses, player animations, and distinct reality effects."
 [[dependencies.realitybending]]
 modId="forge"
 mandatory=true
@@ -20,8 +20,8 @@ versionRange="[1.20.1,1.20.2)"
 ordering="NONE"
 side="BOTH"
 [[dependencies.realitybending]]
-modId="geckolib"
+modId="playeranimator"
 mandatory=true
-versionRange="[4.7,5)"
+versionRange="[1.0.2,2)"
 ordering="AFTER"
 side="BOTH"
