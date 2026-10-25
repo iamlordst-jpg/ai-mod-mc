@@ -35,10 +35,24 @@ public final class PowerAbilityPacket {
                 if(player.isSpectator()||data.getBoolean(active)||player.getCooldowns().isOnCooldown(item(p.ability)))return;
                 data.putBoolean(active,true);data.putInt(type,p.ability);data.putInt(start,player.tickCount);
                 Vec3 look=player.getLookAngle().normalize(),c=player.getEyePosition().add(look.scale(1.0));
-                EnergyProjectile orb=new EnergyProjectile(ModEntities.ENERGY_PROJECTILE.get(),player.level());
-                orb.configure(2,0,player);orb.setBeamLength(p.ability);orb.setPos(c.x,c.y,c.z);player.level().addFreshEntity(orb);
-                var sound=p.ability==0?ModSounds.KI_CHARGE.get():p.ability==1?ModSounds.KAMEHAMEHA_CHARGE.get():ModSounds.VOID_CAST.get();
-                player.level().playSound(null,player.blockPosition(),sound,net.minecraft.sounds.SoundSource.PLAYERS,p.ability==2?2.8F:1.7F,p.ability==1?.72F:.88F);
+                // Only the three energy-based abilities get a charging sphere. The other
+                // abilities charge through distinct world/pose effects instead.
+                if(p.ability<=2){
+                    EnergyProjectile chargeVisual=new EnergyProjectile(ModEntities.ENERGY_PROJECTILE.get(),player.level());
+                    chargeVisual.configure(2,0,player);chargeVisual.setBeamLength(p.ability);chargeVisual.setPos(c.x,c.y,c.z);player.level().addFreshEntity(chargeVisual);
+                } else if(player.level() instanceof ServerLevel server){
+                    if(p.ability==3){
+                        for(int i=0;i<8;i++){double a=i*Math.PI/4;server.sendParticles(ParticleTypes.CRIT,player.getX()+Math.cos(a)*1.3,player.getY()+.05,player.getZ()+Math.sin(a)*1.3,3,.08,.02,.08,.01);}
+                    } else if(p.ability==4){
+                        server.sendParticles(ParticleTypes.PORTAL,player.getX(),player.getY()+1,player.getZ(),36,.35,.6,.35,.18);
+                        server.sendParticles(ParticleTypes.END_ROD,player.getX(),player.getY()+1,player.getZ(),12,.25,.45,.25,.02);
+                    } else {
+                        server.sendParticles(ParticleTypes.END_ROD,player.getX(),player.getY()+1,player.getZ(),24,1.2,.8,1.2,.04);
+                        server.sendParticles(ParticleTypes.ENCHANT,player.getX(),player.getY()+1,player.getZ(),18,.9,.6,.9,.05);
+                    }
+                }
+                var sound=p.ability==0?ModSounds.KI_CHARGE.get():p.ability==1?ModSounds.KAMEHAMEHA_CHARGE.get():p.ability==2?ModSounds.VOID_CAST.get():p.ability==3?net.minecraft.sounds.SoundEvents.DEEPSLATE_BREAK:p.ability==4?net.minecraft.sounds.SoundEvents.ENDERMAN_TELEPORT:net.minecraft.sounds.SoundEvents.AMETHYST_BLOCK_CHIME;
+                player.level().playSound(null,player.blockPosition(),sound,net.minecraft.sounds.SoundSource.PLAYERS,p.ability==2?2.8F:1.7F,p.ability==1?.72F:p.ability==3?.65F:p.ability==4?1.25F:.7F);
                 player.displayClientMessage(net.minecraft.network.chat.Component.literal(name(p.ability)+" — charging"),true);return;
             }
             if(!data.getBoolean(active)||data.getInt(type)!=p.ability)return;
