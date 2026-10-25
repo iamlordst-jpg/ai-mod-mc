@@ -28,10 +28,10 @@ public abstract class FirstPersonPowerHandMixin {
         boolean right=side==HumanoidArm.RIGHT;float time=player.tickCount+Minecraft.getInstance().getFrameTime();float pulse=(float)Math.sin(time*.32F);
         if(tele&&ability<0){
             // Eleven-inspired pose: raised, open palm reaching toward the crosshair.
-            poseStack.translate(right?-.17F:.17F,.32F+pulse*.018F,-.20F);
-            poseStack.mulPose(Axis.XP.rotationDegrees(-29F+pulse*1.2F));
+            poseStack.translate(right?-.10F:.10F,.16F+pulse*.018F,-.08F);
+            poseStack.mulPose(Axis.XP.rotationDegrees(-48F+pulse*1.2F));
             poseStack.mulPose(Axis.YP.rotationDegrees(right?8F:-8F));
-            poseStack.mulPose(Axis.ZP.rotationDegrees(right?-27F:27F));
+            poseStack.mulPose(Axis.ZP.rotationDegrees(right?-20F:20F));
         } else if(ability==1){
             poseStack.translate(right?-.11F:.11F,.22F+pulse*.014F,-.10F);
             poseStack.mulPose(Axis.XP.rotationDegrees(-10F+pulse));
