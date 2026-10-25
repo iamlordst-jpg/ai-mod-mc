@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "uuid": "cf06d9cb-1f3d-4a19-8c47-3e8c38a0d8c2",
+  "name": "power_charge",
+  "emote": {
+    "beginTick": 0,
+    "endTick": 18,
+    "stopTick": 18,
+    "isLoop": true,
+    "returnTick": 0,
+    "nsfw": false,
+    "degrees": false,
+    "moves": [
+      {
+        "tick": 0,
+        "easing": "INOUTSINE",
+        "rightArm": { "x": -1.22, "y": 0.0, "yaw": -0.24, "roll": -0.12 },
+        "leftArm": { "x": -1.22, "y": 0.0, "yaw": 0.24, "roll": 0.12 },
+        "body": { "x": -0.06 }
+      },
+      {
+        "tick": 9,
+        "easing": "INOUTSINE",
+        "rightArm": { "x": -1.52, "y": 0.0, "yaw": -0.3, "roll": -0.16 },
+        "leftArm": { "x": -1.52, "y": 0.0, "yaw": 0.3, "roll": 0.16 },
+        "body": { "x": -0.1 }
+      },
+      {
+        "tick": 18,
+        "easing": "INOUTSINE",
+        "rightArm": { "x": -1.22, "y": 0.0, "yaw": -0.24, "roll": -0.12 },
+        "leftArm": { "x": -1.22, "y": 0.0, "yaw": 0.24, "roll": 0.12 },
+        "body": { "x": -0.06 }
+      }
+    ]
+  }
+}
