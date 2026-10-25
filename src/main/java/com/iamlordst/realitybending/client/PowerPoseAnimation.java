@@ -26,10 +26,11 @@ public final class PowerPoseAnimation {
     public static void tick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.END) return;
         Minecraft minecraft = Minecraft.getInstance();
-        if (!(minecraft.player instanceof AbstractClientPlayer player) || minecraft.level == null) {
+        if (minecraft.player == null || minecraft.level == null) {
             activePose = null;
             return;
         }
+        AbstractClientPlayer player = minecraft.player;
 
         String desired = TelekinesisKeybind.isLocallyEnabled() ? "telekinesis" : null;
         if (desired == null) {
