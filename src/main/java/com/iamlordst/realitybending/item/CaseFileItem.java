@@ -43,3 +43,4 @@ public final class CaseFileItem extends Item {
         }
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
     }
+}
