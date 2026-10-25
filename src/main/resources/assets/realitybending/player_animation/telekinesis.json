@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "uuid": "dc28a4aa-4c0f-4a4e-9f3b-bcb119c3f201",
+  "name": "telekinesis",
+  "emote": {
+    "beginTick": 0,
+    "endTick": 20,
+    "stopTick": 20,
+    "isLoop": true,
+    "returnTick": 0,
+    "nsfw": false,
+    "degrees": false,
+    "moves": [
+      {
+        "tick": 0,
+        "easing": "INOUTSINE",
+        "rightArm": { "x": -1.48, "y": 0.0, "yaw": -0.18, "roll": -0.22 },
+        "leftArm": { "x": -1.48, "y": 0.0, "yaw": 0.18, "roll": 0.22 }
+      },
+      {
+        "tick": 10,
+        "easing": "INOUTSINE",
+        "rightArm": { "x": -1.62, "y": 0.0, "yaw": -0.25, "roll": -0.28 },
+        "leftArm": { "x": -1.62, "y": 0.0, "yaw": 0.25, "roll": 0.28 }
+      },
+      {
+        "tick": 20,
+        "easing": "INOUTSINE",
+        "rightArm": { "x": -1.48, "y": 0.0, "yaw": -0.18, "roll": -0.22 },
+        "leftArm": { "x": -1.48, "y": 0.0, "yaw": 0.18, "roll": 0.22 }
+      }
+    ]
+  }
+}
