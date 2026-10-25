@@ -7,16 +7,33 @@ import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.ItemInHandRenderer;
+import net.minecraft.client.renderer.MultiBufferSource.BufferSource;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ItemInHandRenderer.class)
 public abstract class FirstPersonPowerHandMixin {
+    @Shadow private void renderPlayerArm(PoseStack poseStack, MultiBufferSource buffers, int light, float equipProgress, float swingProgress, HumanoidArm arm) { throw new AssertionError(); }
+
+    // Force both skin-textured arms to render while telekinesis is active, even if an item is held.
+    @Inject(method="renderHandsWithItems", at=@At("HEAD"), cancellable=true)
+    private void realitybending$forceTelekinesisHands(float partialTick, PoseStack poseStack, BufferSource buffers, LocalPlayer player, int packedLight, CallbackInfo ci) {
+        if (!TelekinesisKeybind.isLocallyEnabled()) return;
+        poseStack.pushPose();
+        float swing = player.getAttackAnim(partialTick);
+        renderPlayerArm(poseStack, buffers, packedLight, 0.0F, swing, HumanoidArm.RIGHT);
+        renderPlayerArm(poseStack, buffers, packedLight, 0.0F, swing, HumanoidArm.LEFT);
+        poseStack.popPose();
+        ci.cancel();
+    }
+
     @Unique private boolean realitybending$posePushed=false;
     @Inject(method="renderPlayerArm",at=@At("HEAD"))
     private void realitybending$beginArmPose(PoseStack poseStack,MultiBufferSource buffers,int light,float equip,float swing,HumanoidArm side,CallbackInfo ci){
@@ -28,10 +45,10 @@ public abstract class FirstPersonPowerHandMixin {
         boolean right=side==HumanoidArm.RIGHT;float time=player.tickCount+Minecraft.getInstance().getFrameTime();float pulse=(float)Math.sin(time*.32F);
         if(tele&&ability<0){
             // Eleven-inspired pose: raised, open palm reaching toward the crosshair.
-            poseStack.translate(right?-.10F:.10F,.16F+pulse*.018F,-.08F);
-            poseStack.mulPose(Axis.XP.rotationDegrees(-48F+pulse*1.2F));
+            poseStack.translate(right?-.035F:.035F,.72F+pulse*.018F,-.24F);
+            poseStack.mulPose(Axis.XP.rotationDegrees(-56F+pulse*1.2F));
             poseStack.mulPose(Axis.YP.rotationDegrees(right?8F:-8F));
-            poseStack.mulPose(Axis.ZP.rotationDegrees(right?-20F:20F));
+            poseStack.mulPose(Axis.ZP.rotationDegrees(right?-13F:13F));
         } else if(ability==1){
             poseStack.translate(right?-.11F:.11F,.22F+pulse*.014F,-.10F);
             poseStack.mulPose(Axis.XP.rotationDegrees(-10F+pulse));
